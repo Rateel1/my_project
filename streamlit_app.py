@@ -32,7 +32,7 @@ st.markdown("""
 
 @st.cache_resource
 def load_model():
-    return joblib.load("lgbm.joblib")
+    return joblib.load("last_xgb_model.joblib")
 
 model = load_model()
 
@@ -103,11 +103,11 @@ with col2:
             beds = st.slider("عدد غرف النوم 🛏️", 3, 7, 3)
             livings = st.slider("عدد غرف المعيشة 🛋️", 1, 7, 1)
             wc = st.slider("عدد دورات المياه 🚽", 2, 5, 2)
-            area = st.number_input("المساحة (متر مربع) 📏", 150.0, 12000.0, 150.0)
+            area = st.number_input("المساحة (متر مربع) 📏", 150.0, 600.0, 150.0)
 
         with col_b:
             street_width = st.selectbox("عرض الشارع (متر) 🛣️", [10, 12, 15, 18, 20, 25], index=2)
-            age = st.number_input("عمر العقار 🗓️", 0, 36, 5)
+            age = st.number_input("عمر العقار 🗓️", 0, 5, 1)
             street_direction = st.selectbox("نوع الواجهة 🧭", [
                 "واجهة شمالية", "واجهة شرقية", "واجهة غربية", "واجهة جنوبية",
                 "واجهة شمالية شرقية", "واجهة جنوبية شرقية", "واجهة جنوبية غربية", "واجهة شمالية غربية",
@@ -345,7 +345,7 @@ def load_feature_importance_data():
 
 df_features = load_feature_importance_data()
 
-# --- 📊 Feature Importance Section ---
+
 col3, col4, col5 = st.columns([1, 1, 1]) 
 
 with col3:
@@ -425,7 +425,7 @@ if df_deals is not None and df_cost is not None:
         df_deals_filtered = df_deals
         df_cost_filtered = df_cost
 
-    # --- 📊 Number of Deals per District ---
+   
 with col4:
     st.subheader("📊 عدد الصفقات حسب الحي")
     deals_per_district = df_deals_filtered.groupby(["District"])["Deal Count"].sum().reset_index()
@@ -441,7 +441,7 @@ with col4:
     fig_deals.update_layout(coloraxis_colorbar=dict(tickvals=[2022, 2023, 2024], ticktext=["2022", "2023", "2024"]))  # ✅ Only show 2022, 2023, 2024
     st.plotly_chart(fig_deals)
 
-   # --- 💰 Total Cost of Deals per District ---
+   
 with col5:
     st.subheader("💰 التكلفة الكلية للصفقات")
 

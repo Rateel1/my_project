@@ -41,7 +41,7 @@ model = load_model()
 # Relevant features for prediction
 relevant_features = [
     'beds', 'livings', 'wc', 'area', 'street_width', 'age', 'street_direction', 'ketchen',
-    'furnished', 'location.lat', 'location.lng', 'city_id', 'district_id'
+    'furnished', 'location.lat', 'location.lng', 'district'
 ]
 
 # Prediction function
@@ -307,7 +307,7 @@ with col2:
                     'ketchen': ketchen, 'furnished': furnished,
                     'location.lat': st.session_state['location_lat'],
                     'location.lng': st.session_state['location_lng'],
-                    'city_id': city_id, 'district_id': district_id
+                    'district': district
                 }
                 predicted_price = predict_price(new_record)
             st.success('تمت عملية التوقع بنجاح!')
@@ -356,7 +356,7 @@ with col3:
 
         # ✅ Plot feature importance (assuming correct columns exist)
         fig_features = px.bar(
-            df_features, x="Importance", y="Feature", orientation="h",
+            df_features, x="تأثيرها على السعر", y="الخاصية", orientation="h",
             title="Feature Importance", color="Importance"
         )
         st.plotly_chart(fig_features)
@@ -437,7 +437,7 @@ with col4:
     
     fig_deals = px.bar(
         df_deals_filtered, x="District", y="Deal Count", color="Year",
-        barmode="group", title="Number of Deals per District per Year",
+        #barmode="group", title="Number of Deals per District per Year",
         category_orders={"District": deals_per_district["District"].tolist()}  # Sorting reflected in plot
     )
     fig_deals.update_layout(coloraxis_colorbar=dict(tickvals=[2022, 2023, 2024], ticktext=["2022", "2023", "2024"]))  # ✅ Only show 2022, 2023, 2024
@@ -455,7 +455,7 @@ with col5:
 
         fig_cost = px.bar(
             df_cost_filtered, x="District", y="Total Cost", color="Year",
-            barmode="stack", title="Total Cost of Deals per District per Year",
+            #barmode="stack", title="Total Cost of Deals per District per Year",
             category_orders={"District": cost_per_district["District"].tolist()}  # Sorting reflected in plot
         )
         fig_cost.update_layout(coloraxis_colorbar=dict(tickvals=[2022, 2023, 2024], ticktext=["2022", "2023", "2024"]))  # ✅ Only show 2022, 2023, 2024

@@ -1,5 +1,7 @@
 import streamlit as st
 import joblib
+import xgboost
+
 import pandas as pd
 import plotly.express as px
 import folium

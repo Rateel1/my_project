@@ -7,3 +7,4 @@ scikit-learn
 streamlit_folium 
 folium
 plotly
+xgboost

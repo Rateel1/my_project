@@ -10,7 +10,7 @@ from streamlit_folium import st_folium
 from PIL import Image
 
 
-st.set_page_config(page_title="لوحة المعلوماتتت العقارية ", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="لوحة المعلومات العقارية ", layout="wide", initial_sidebar_state="collapsed")
 
 # Custom CSS for styling
 st.markdown("""
@@ -34,22 +34,29 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 @st.cache_resource
+
+
+# Load the model
 def load_model():
     return joblib.load("last_xgb_model.joblib")
 
 model = load_model()
-model_columns = joblib.load("model_columnsXGB.pkl") 
-# Relevant features for prediction
-relevant_features = [
-    'beds', 'livings', 'wc', 'area', 'street_width', 'age', 'street_direction', 'ketchen',
-    'furnished', 'location.lat', 'location.lng', 'district'
-]
 
-# Prediction function
+# Load the columns used during training
+model_columns = joblib.load("model_columnsXGB.pkl")
+
+# ✅ Prediction function
 def predict_price(new_record):
+    # Convert the input record to a DataFrame
     new_record_df = pd.DataFrame([new_record])
+    
+    # Apply one-hot encoding
     new_record_df = pd.get_dummies(new_record_df, drop_first=True)
+    
+    # Align columns with training columns
     new_record_df = new_record_df.reindex(columns=model_columns, fill_value=0)
+    
+    # Predict using the model
     return model.predict(new_record_df)[0]
 
 
@@ -444,7 +451,7 @@ with col4:
 
    
 with col5:
-    st.subheader("💰 التكلفة الكلية للصفقات")
+    st.subheader("💰 jالتكلفة الكلية للصفقات")
 
     if df_cost_filtered is not None:
         cost_per_district = df_cost_filtered.groupby(["District"])["Total Cost"].sum().reset_index()

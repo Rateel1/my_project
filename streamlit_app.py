@@ -55,11 +55,14 @@ def predict_price(new_record):
     
     # Align columns with training columns
     new_record_df = new_record_df.reindex(columns=model_columns, fill_value=0)
+    # Predict the log(price)
+    log_price = model.predict(new_record_df)[0]
     
-    # Predict using the model
-    return model.predict(new_record_df)[0]
-
-
+    # Convert back to original price
+    original_price = np.expm1(log_price)
+    
+    return original_price
+  
 
 # Layout with 3 columns and 2 rows
 

@@ -295,7 +295,7 @@ with col2:
 
         selected_district = st.selectbox("اختر الحي 🏙️", district_data, format_func=lambda x: f"{x[1]} ({x[2]})")
   
-        #district = selected_district[1]
+        district = selected_district[1]
         #city_id = city_name_to_id[selected_district[2]]
 
         # ✅ Submit button inside the form

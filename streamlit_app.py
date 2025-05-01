@@ -38,7 +38,7 @@ def load_model():
     return joblib.load("last_xgb_model.joblib")
 
 model = load_model()
-
+model_columns = joblib.load("model_columnsXGB.pkl") 
 # Relevant features for prediction
 relevant_features = [
     'beds', 'livings', 'wc', 'area', 'street_width', 'age', 'street_direction', 'ketchen',
@@ -49,7 +49,7 @@ relevant_features = [
 def predict_price(new_record):
     new_record_df = pd.DataFrame([new_record])
     new_record_df = pd.get_dummies(new_record_df, drop_first=True)
-    new_record_df = new_record_df.reindex(columns=relevant_features, fill_value=0)
+    new_record_df = new_record_df.reindex(columns=model_columns, fill_value=0)
     return model.predict(new_record_df)[0]
 
 

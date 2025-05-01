@@ -455,7 +455,7 @@ with col4:
 
    
 with col5:
-    st.subheader("💰 jالتكلفة الكلية للصفقات")
+    st.subheader("💰 التكلفة الكلية للصفقات")
 
     if df_cost_filtered is not None:
         cost_per_district = df_cost_filtered.groupby(["District"])["Total Cost"].sum().reset_index()

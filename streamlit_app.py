@@ -348,18 +348,18 @@ col3, col4, col5 = st.columns([1, 1, 1])
 
 
 with col3:
-    if all(col in df_features.columns for col in ["الخاصية", "تأثيرها على السعر"]):
-    fig_features = px.bar(
-        df_features,
-        x="تأثيرها على السعر",
-        y="الخاصية",
-        orientation="h",
-        title="Feature Importance",
-        color="تأثيرها على السعر"  # استخدم نفس العمود في color
-    )
-    st.plotly_chart(fig_features)
-else:
-    st.error("تحقق من أسماء الأعمدة: 'الخاصية' و 'تأثيرها على السعر' غير موجودة في df_features")
+    if df_features is not None and all(col in df_features.columns for col in ["الخاصية", "تأثيرها على السعر"]):
+        fig_features = px.bar(
+            df_features,
+            x="تأثيرها على السعر",
+            y="الخاصية",
+            orientation="h",
+            title="Feature Importance",
+            color="تأثيرها على السعر"
+        )
+        st.plotly_chart(fig_features)
+    else:
+        st.error("تحقق من أسماء الأعمدة: 'الخاصية' و 'تأثيرها على السعر' غير موجودة في df_features")
 
     
 # File paths for CSV files

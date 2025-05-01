@@ -332,16 +332,16 @@ def load_feature_importance_data():
 
     try:
         df = pd.read_csv(FEATURE_IMPORTANCE_FILE)
+
+
         # ✅ Check column names to avoid KeyError
-        #expected_columns = {"الخاصية","تأثيرها على السعر"}
-        expected_columns = {"تأثيرها على السعر","الخاصية"}
-        if not expected_columns.issubset(df.columns):
+        expected_columns = {"الخاصية","تأثيرها على السعر"}
+              if not expected_columns.issubset(df.columns):
             missing_cols = expected_columns - set(df.columns)
             st.error(f"⚠️ CSV file is missing required columns: {missing_cols}")
             return None
 
         return df
-
     except Exception as e:
         st.error(f"⚠️ Error reading {FEATURE_IMPORTANCE_FILE}: {e}")
         return None
@@ -352,19 +352,17 @@ df_features = load_feature_importance_data()
 col3, col4, col5 = st.columns([1, 1, 1]) 
 
 with col3:
-    if df_features is not None:
-        st.subheader("📊 تأثير الخصائص على السعر")
-
-        # ✅ Plot feature importance (assuming correct columns exist)
-        fig_features = px.bar(
-            df_features, x="تأثيرها على السعر", y="الخاصية", orientation="h",
-            title="Feature Importance", color="Importance"
-        )
-        st.plotly_chart(fig_features)
-    else:
-        st.error("❌ Feature importance data not found!")
+    
 
 
+if all(col in df_features.columns for col in ["الخاصية", "تأثيرها على السعر"]):
+    fig_features = px.bar(
+        df_features,  x="تأثيرها على السعر",y="الخاصية",orientation="h",title="Feature Importance",
+        color="تأثيرها على السعر" 
+    )
+    st.plotly_chart(fig_features)
+else:
+    st.error("تحقق من أسماء الأعمدة: 'الخاصية' و 'تأثيرها على السعر' غير موجودة في df_features")
 
 # File paths for CSV files
 DEALS_FILES = {

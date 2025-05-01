@@ -315,10 +315,6 @@ with col2:
 # Bottom section: Visualization
 st.header("📊 رؤى")
 # Second Row: Feature Importance, Deals Count, Deals Cost
-import os
-import pandas as pd
-import streamlit as st
-import plotly.express as px
 
 # --- 📊 Feature Importance Section ---
 FEATURE_IMPORTANCE_FILE = "feature importance.csv"  # Ensure file name matches your actual file
@@ -333,23 +329,23 @@ def load_feature_importance_data():
     try:
         df = pd.read_csv(FEATURE_IMPORTANCE_FILE)
 
-
         # ✅ Check column names to avoid KeyError
-        expected_columns = {"الخاصية","تأثيرها على السعر"}
-            if not expected_columns.issubset(df.columns):
+        expected_columns = {"الخاصية", "تأثيرها على السعر"}
+        if not expected_columns.issubset(df.columns):
             missing_cols = expected_columns - set(df.columns)
             st.error(f"⚠️ CSV file is missing required columns: {missing_cols}")
             return None
 
         return df
+
     except Exception as e:
         st.error(f"⚠️ Error reading {FEATURE_IMPORTANCE_FILE}: {e}")
         return None
 
+
 df_features = load_feature_importance_data()
+col3, col4, col5 = st.columns([1, 1, 1])
 
-
-col3, col4, col5 = st.columns([1, 1, 1]) 
 
 with col3:
     if all(col in df_features.columns for col in ["الخاصية", "تأثيرها على السعر"]):

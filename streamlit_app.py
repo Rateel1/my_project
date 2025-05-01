@@ -8,6 +8,7 @@ import plotly.express as px
 import folium
 from streamlit_folium import st_folium
 from PIL import Image
+import numpy as np
 
 
 st.set_page_config(page_title="لوحة المعلومات العقارية ", layout="wide", initial_sidebar_state="collapsed")

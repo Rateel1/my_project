@@ -10,7 +10,7 @@ from streamlit_folium import st_folium
 from PIL import Image
 
 
-st.set_page_config(page_title="لوحة المعلومات العقارية ", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="لوحة المعلوماتتت العقارية ", layout="wide", initial_sidebar_state="collapsed")
 
 # Custom CSS for styling
 st.markdown("""

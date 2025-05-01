@@ -293,8 +293,8 @@ with col2:
         ]
 
         selected_district = st.selectbox("اختر الحي 🏙️", district_data, format_func=lambda x: f"{x[1]} ({x[2]})")
-        district_id = selected_district[0]
-        city_id = city_name_to_id[selected_district[2]]
+        #district_id = selected_district[0]
+        #city_id = city_name_to_id[selected_district[2]]
 
         # ✅ Submit button inside the form
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
@@ -334,7 +334,7 @@ def load_feature_importance_data():
         df = pd.read_csv(FEATURE_IMPORTANCE_FILE)
 
         # ✅ Check column names to avoid KeyError
-        expected_columns = {"Feature", "Importance"}
+        expected_columns = {"الخاصية", "تأثيرها على السعر"}
         if not expected_columns.issubset(df.columns):
             missing_cols = expected_columns - set(df.columns)
             st.error(f"⚠️ CSV file is missing required columns: {missing_cols}")
@@ -467,4 +467,4 @@ with col5:
 
 
 # Footer
-st.markdown("---")
+st.markdown("--h-")

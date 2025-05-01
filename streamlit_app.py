@@ -334,8 +334,8 @@ def load_feature_importance_data():
         df = pd.read_csv(FEATURE_IMPORTANCE_FILE)
 
         # ✅ Check column names to avoid KeyError
-        expected_columns = {"الخاصية", "تأثيرها على السعر"}
-        if not expected_columns.issubset(df.columns):
+        expected_columns = {"الخاصية","تأثيرها على السعر"}
+              if not expected_columns.issubset(df.columns):
             missing_cols = expected_columns - set(df.columns)
             st.error(f"⚠️ CSV file is missing required columns: {missing_cols}")
             return None
@@ -467,4 +467,4 @@ with col5:
 
 
 # Footer
-st.markdown("--h-")
+st.markdown("---")

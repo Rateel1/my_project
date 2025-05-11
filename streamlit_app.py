@@ -74,37 +74,46 @@ col1, col2 = st.columns([1, 2])
 
 
 with col1:
+  
+with st.container():
     st.subheader("📍 اختر الموقع")
-    
-    # Set default location to Riyadh, Saudi Arabia
+
+    # الإحداثيات الافتراضية - الرياض
     riyadh_lat, riyadh_lng = 24.7136, 46.6753
     if 'location_lat' not in st.session_state:
         st.session_state['location_lat'] = riyadh_lat
     if 'location_lng' not in st.session_state:
         st.session_state['location_lng'] = riyadh_lng
-    
-    # Folium map centered and restricted to Riyadh
+
+    # إنشاء الخريطة مع عناصر احترافية
     m = folium.Map(
-        location=[riyadh_lat, riyadh_lng], 
-        zoom_start=11, 
-        max_bounds=True,
-        min_lat=24.4, max_lat=25.0,  # Approximate bounding box for Riyadh
-        min_lon=46.4, max_lon=47.0
-    )
-    
-    marker = folium.Marker(
         location=[st.session_state['location_lat'], st.session_state['location_lng']],
-        draggable=True
+        zoom_start=12,
+        tiles="CartoDB positron",  # أو "Stamen Toner", "OpenStreetMap"
+        control_scale=True
     )
-    marker.add_to(m)
-    
-    map_data = st_folium(m, width=700, height=400)
-    
-    if map_data['last_clicked']:
+
+    # إضافة المقياس وأداة قياس المسافة
+    m.add_child(MeasureControl(primary_length_unit='kilometers'))
+    m.add_child(MousePosition(position='bottomright'))
+
+    # وضع مؤشر قابل للسحب
+    draggable_marker = folium.Marker(
+        [st.session_state['location_lat'], st.session_state['location_lng']],
+        draggable=True,
+        icon=folium.Icon(color="red", icon="map-marker")
+    )
+    draggable_marker.add_to(m)
+
+    # عرض الخريطة وجمع البيانات عند النقر
+    map_data = st_folium(m, width=700, height=450)
+
+    if map_data.get('last_clicked'):
         st.session_state['location_lat'] = map_data['last_clicked']['lat']
         st.session_state['location_lng'] = map_data['last_clicked']['lng']
-    
-    st.write(f"الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
+
+    st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
+
 
 # Column 2: Input Form
 with col2:

@@ -49,22 +49,28 @@ model_columns = joblib.load("model_columnsXGB.pkl")
 
 # ✅ Prediction function
 def predict_price(new_record):
-    # Convert the input record to a DataFrame
+    model = joblib.load("last_xgb_model.joblib")
+    model_columns = joblib.load("model_columnsXGB.pkl")
+
+    # Convert to DataFrame
     new_record_df = pd.DataFrame([new_record])
     
-    # Apply one-hot encoding
-    new_record_df = pd.get_dummies(new_record_df, drop_first=True)
-    
-    # Align columns with training columns
-    new_record_df = new_record_df.reindex(columns=model_columns, fill_value=0)
-    # Predict the log(price)
+    # One-hot encode if needed
+    new_record_df = pd.get_dummies(new_record_df)
+
+    # Add missing columns
+    for col in model_columns:
+        if col not in new_record_df:
+            new_record_df[col] = 0
+    new_record_df = new_record_df[model_columns]
+
+    # Ensure correct dtype
+    new_record_df = new_record_df.astype(float)
+
+    # Predict
     log_price = model.predict(new_record_df)[0]
-    
-    # Convert back to original price
-    original_price = np.expm1(log_price)
-    
-    return original_price
-  
+    return np.expm1(log_price)  # if log target
+
 
 # Layout with 3 columns and 2 rows
 

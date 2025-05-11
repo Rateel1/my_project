@@ -75,7 +75,7 @@ col1, col2 = st.columns([1, 2])
 
 with col1:
     with st.container():
-        st.subheader("📍 dاختر الموقع")
+        st.subheader("📍 اختر الموقع")
 
         # الإحداثيات الافتراضية - الرياض
         riyadh_lat, riyadh_lng = 24.7136, 46.6753

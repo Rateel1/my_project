@@ -1,6 +1,7 @@
 import streamlit as st
 import joblib
 import xgboost
+from lightgbm import LGBMRegressor
 import os
 
 import pandas as pd

@@ -1,7 +1,6 @@
 import streamlit as st
 import joblib
 import xgboost
-from lightgbm import LGBMRegressor
 import os
 
 import pandas as pd
@@ -40,7 +39,7 @@ st.markdown("""
 
 # Load the model
 def load_model():
-    return joblib.load("last_xgb_model.joblib")
+    return joblib.load("selected_xgb_modelafter.joblib")
 
 model = load_model()
 
@@ -49,8 +48,8 @@ model_columns = joblib.load("model_columnsXGB.pkl")
 
 # ✅ Prediction function
 def predict_price(new_record):
-    model = joblib.load("last_xgb_model.joblib")
-    model_columns = joblib.load("model_columnsXGB.pkl")
+    model = joblib.load("selected_xgb_modelafter.joblib")
+    model_columns = joblib.load("xgb_model_featuresafter.pkl")
 
     # Convert to DataFrame
     new_record_df = pd.DataFrame([new_record])

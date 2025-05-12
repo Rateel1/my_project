@@ -11,7 +11,7 @@ from PIL import Image
 import numpy as np
 
 
-st.set_page_config(page_title="لوحة المعلومات العقارية ", layout="wide", initial_sidebar_state="collapsed")
+
 
 
 st.set_page_config(page_title="لوحة المعلومات العقارية")  # Optional: sets browser tab title

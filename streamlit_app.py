@@ -11,10 +11,16 @@ from PIL import Image
 import numpy as np
 
 
+import streamlit as st
 
-st.set_page_config(page_title="لوحة المعلومات العقارية ", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
 
-st.title("لوحة عقارية")
+# Centered title using markdown and HTML
+st.markdown(
+    "<h1 style='text-align: center; direction: rtl;'>لوحة عقارية</h1>",
+    unsafe_allow_html=True
+)
+
 
 # Custom CSS for styling
 st.markdown("""

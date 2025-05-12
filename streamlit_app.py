@@ -17,7 +17,7 @@ st.set_page_config(page_title="لوحة المعلومات العقارية", la
 
 # Centered title using markdown and HTML
 st.markdown(
-    "<h1 style='text-align: center; direction: rtl;'>لوحة عقارية</h1>",
+    "<h1 style='text-align: center; direction: rtl;'> 🏠لوحة  المعلومات  العقارية</h1>",
     unsafe_allow_html=True
 )
 

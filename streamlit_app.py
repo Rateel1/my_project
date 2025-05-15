@@ -13,7 +13,7 @@ st.set_page_config(page_title="لوحة المعلومات العقارية", la
 # تحميل النموذج
 @st.cache_resource
 def load_model():
-    return joblib.load("lgbm.joblib")
+    return joblib.load("last_xgb_model")
 
 model = load_model()
 

@@ -1,141 +1,130 @@
 import streamlit as st
 import joblib
 import pandas as pd
-import plotly.express as px
+import numpy as np
 import folium
-import os
 from streamlit_folium import st_folium
 from PIL import Image
+from folium.plugins import MeasureControl, MousePosition
 
 # إعداد الصفحة
-st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
+
+# العنوان الرئيسي
+st.markdown("<h1 style='text-align: center; direction: rtl;'> 🏠لوحة  المعلومات  العقارية</h1>", unsafe_allow_html=True)
+
+# تنسيقات CSS مخصصة
+st.markdown("""
+<style>
+.stApp { background-color: #f0f2f6; }
+.stButton>button { color: #ffffff; background-color: #4CAF50; border-radius: 5px; }
+.stMetricLabel { font-size: 20px; }
+.stMetricValue { font-size: 40px; color: #4CAF50; }
+</style>
+""", unsafe_allow_html=True)
 
 # تحميل النموذج
 @st.cache_resource
 def load_model():
-    return joblib.load("last_xgb_model")
+    return joblib.load("selected_xgb_modelafter.joblib")
+
+@st.cache_resource
+def load_model_columns():
+    return joblib.load("xgb_model_featuresafter.pkl")
 
 model = load_model()
+model_columns = load_model_columns()
 
-# تحميل قائمة الأحياء من ملف Excel
-@st.cache_data
-def load_districts():
-    try:
-        df = pd.read_excel("district_centers.xlsx", engine="openpyxl")
-        return sorted(df["district"].dropna().unique())
-    except Exception as e:
-        st.error(f"فشل في تحميل الأحياء: {e}")
-        return []
+# دالة التوقع
+def predict_price(new_record):
+    new_record_df = pd.DataFrame([new_record])
+    new_record_df = pd.get_dummies(new_record_df)
 
-districts_list = load_districts()
+    # إضافة الأعمدة المفقودة
+    for col in model_columns:
+        if col not in new_record_df:
+            new_record_df[col] = 0
+    new_record_df = new_record_df[model_columns]
 
-# تنسيق CSS
-st.markdown("""
-<style>
-.stApp { background-color: #f8f9fa; }
-.stButton>button {
-    color: #ffffff;
-    background-color: #e63946;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 16px;
-}
-.metric-box {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    text-align: center;
-    margin-bottom: 10px;
-}
-.metric-label { font-size: 18px; color: #555; }
-.metric-value { font-size: 30px; font-weight: bold; color: #e63946; }
-</style>
-""", unsafe_allow_html=True)
+    new_record_df = new_record_df.astype(float)
+    log_price = model.predict(new_record_df)[0]
+    return np.expm1(log_price)
 
-# الشريط الجانبي للتنقل
-st.sidebar.header("انتقل")
-selected_page = st.sidebar.radio("Go to", ["نظرة عامة", "رؤى السوق  العقاري", "التنبؤ"])
+# تحميل مواقع الأحياء
+district_centers = pd.read_excel("district_centers.xlsx")
 
-if selected_page == "نظرة عامة":
-    st.title("🏠 لوحة المعلومات العقارية")
+# الواجهة الرئيسية: خريطة واستمارة الإدخال
+col1, col2 = st.columns([1, 2])
 
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("<div class='metric-box'><div class='metric-label'>Waterfront Properties</div><div class='metric-value'>163</div></div>", unsafe_allow_html=True)
-    with col2:
-        st.markdown("<div class='metric-box'><div class='metric-label'>Total Bedrooms</div><div class='metric-value'>22K</div></div>", unsafe_allow_html=True)
-    with col3:
-        st.markdown("<div class='metric-box'><div class='metric-label'>Renovated Properties</div><div class='metric-value'>10K</div></div>", unsafe_allow_html=True)
+with col1:
+    st.subheader("📍 اختر الموقع")
+    riyadh_lat, riyadh_lng = 24.7136, 46.6753
+    st.session_state.setdefault('location_lat', riyadh_lat)
+    st.session_state.setdefault('location_lng', riyadh_lng)
 
-    st.subheader("📊 عدد الغرف")
-    bedrooms_data = pd.DataFrame({
-        "Bedrooms": ["3 Bedroom", "4 Bedrooms", "5 Bedrooms", "6 Bedrooms", "7 Bedrooms"],
-        "Count": [274, 2760, 9824, 6882, 1601]
-    })
-    fig_bedrooms = px.bar(bedrooms_data, x="Bedrooms", y="Count", color="Bedrooms", title="عدد الغرف في العقار")
-    st.plotly_chart(fig_bedrooms)
+    m = folium.Map(
+        location=[st.session_state['location_lat'], st.session_state['location_lng']],
+        zoom_start=12, tiles="CartoDB positron", control_scale=True
+    )
+    m.add_child(MeasureControl(primary_length_unit='kilometers'))
+    m.add_child(MousePosition(position='bottomright'))
 
-elif selected_page == "رؤى السوق  العقاري":
-    st.title("📈 رؤى السوق  العقاري")
+    marker = folium.Marker(
+        location=[st.session_state['location_lat'], st.session_state['location_lng']],
+        draggable=True,
+        icon=folium.Icon(color="red", icon="map-marker")
+    )
+    marker.add_to(m)
 
-    DEALS_FILES = {"2022": "selected2022_a.csv", "2023": "selected2023_a.csv", "2024": "selected2024_a.csv"}
-    TOTAL_COST_FILE = "deals_total.csv"
+    map_data = st_folium(m, width=700, height=450)
+    if map_data.get('last_clicked'):
+        st.session_state['location_lat'] = map_data['last_clicked']['lat']
+        st.session_state['location_lng'] = map_data['last_clicked']['lng']
 
-    @st.cache_data
-    def load_deals_data():
-        dataframes = []
-        for year, file in DEALS_FILES.items():
-            if os.path.exists(file):
-                df = pd.read_csv(file)
-                df["Year"] = int(year)
-                dataframes.append(df)
-        return pd.concat(dataframes, ignore_index=True) if dataframes else None
+    st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
-    @st.cache_data
-    def load_total_cost_data():
-        if os.path.exists(TOTAL_COST_FILE):
-            df = pd.read_csv(TOTAL_COST_FILE)
-            first_col = df.columns[0]
-            df = df.melt(id_vars=[first_col], var_name="Year", value_name="Total Cost")
-            df.rename(columns={first_col: "District"}, inplace=True)
-            df["Year"] = df["Year"].astype(int)
-            return df
-        return None
+with col2:
+    st.subheader("🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية")
 
-    df_deals = load_deals_data()
-    df_cost = load_total_cost_data()
-
-    if df_deals is not None and df_cost is not None:
-        st.subheader("📊 عدد الصفقات حسب الحي")
-        deals_per_district = df_deals.groupby(["District"])["Deal Count"].sum().reset_index()
-        fig_deals = px.bar(deals_per_district, x="District", y="Deal Count", color="District", title="Deals per District")
-        st.plotly_chart(fig_deals)
-
-        st.subheader("💰 التكلفة الكلية للصفقات حسب الحي")
-        cost_per_district = df_cost.groupby(["District"])["Total Cost"].sum().reset_index()
-        fig_cost = px.bar(cost_per_district, x="District", y="Total Cost", color="District", title="Total Cost of Deals")
-        st.plotly_chart(fig_cost)
-    else:
-        st.error("❌ لم يتم العثور على ملفات البيانات!")
-
-elif selected_page == "التنبؤ":
-    st.title("🔮 الأسعار التنبؤية")
     with st.form("house_details_form"):
-        district = st.selectbox("District", districts_list)
-        beds = st.slider("Bedrooms", 3, 7, 3)
-        area = st.number_input("Area (sqm)", 150, 12000, 150)
-        age = st.number_input("Age of Property", 0, 36, 5)
-        street_width = st.selectbox("Street Width (m)", [10, 12, 15, 18, 20, 25])
-        submitted = st.form_submit_button("🔎 Predict Price")
+        col_a, col_b = st.columns(2)
+        with col_a:
+            beds = st.slider("عدد غرف النوم 🛏️", 3, 7, 3)
+            livings = st.slider("عدد غرف المعيشة 🛋️", 1, 7, 1)
+            wc = st.slider("عدد دورات المياه 🚽", 2, 5, 2)
+            area = st.number_input("المساحة (متر مربع) 📏", 150.0, 600.0, 150.0)
+
+        with col_b:
+            street_width = st.selectbox("عرض الشارع (متر) 🛣️", [10, 12, 15, 18, 20, 25], index=2)
+            age = st.number_input("عمر العقار 🗓️", 0, 5, 1)
+            street_direction = st.selectbox("نوع الواجهة 🧭", [
+                "واجهة شمالية", "واجهة شرقية", "واجهة غربية", "واجهة جنوبية",
+                "واجهة شمالية شرقية", "واجهة جنوبية شرقية", "واجهة جنوبية غربية", "واجهة شمالية غربية",
+                "الفلة تقع على ثلاثة شوارع", "الفلة تقع على أربعة شوارع"
+            ])
+            ketchen = st.selectbox("المطبخ مجهز🍳؟", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
+            furnished = st.selectbox("الفلة مؤثثة🪑؟", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
+
+        # إدخال الحي
+        districts = district_centers[district_centers['city_name'] == 'الرياض']
+        district_options = [(row['district_id'], row['district_name'], row['city_name']) for _, row in districts.iterrows()]
+        selected_district = st.selectbox("اختر الحي 🏙️", district_options, format_func=lambda x: f"{x[1]} ({x[2]})")
+        district = selected_district[1]
+
+        submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
         if submitted:
-            new_record = {'district': district, 'beds': beds, 'area': area, 'age': age, 'street_width': street_width}
-            input_df = pd.DataFrame([new_record])
-            predicted_price = model.predict(input_df)[0]
-            st.success(f"🏷️ Estimated Price: ${predicted_price:,.2f}")
-
-st.markdown("---")
-
+            with st.spinner('جاري الحساب...'):
+                new_record = {
+                    'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
+                    'street_width': street_width, 'age': age, 'street_direction': street_direction,
+                    'ketchen': ketchen, 'furnished': furnished,
+                    'location.lat': st.session_state['location_lat'],
+                    'location.lng': st.session_state['location_lng'],
+                    'district': district
+                }
+                predicted_price = predict_price(new_record)
+            st.success('تمت عملية التوقع بنجاح!')
+            st.metric(label="السعر التقريبي", value=f"ريال {predicted_price:,.2f}")
 
 # Bottom section: Visualization
 st.header("📊 رؤى")

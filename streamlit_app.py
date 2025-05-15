@@ -12,6 +12,7 @@ import numpy as np
 
 
 import streamlit as st
+district_centers = pd.read_excel("district_centers.xlsx")
 
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
 

@@ -52,9 +52,7 @@ def predict_price(new_record):
 
 # تحميل مواقع الأحياء
 district_centers = pd.read_excel("district_centers.xlsx")
-st.write("🧪 Available columns in 'district_centers':", district_centers.columns.tolist())
-st.write("🧪 Sample rows from district_centers:")
-st.dataframe(district_centers.head())
+
 
 # الواجهة الرئيسية: خريطة واستمارة الإدخال
 col1, col2 = st.columns([1, 2])
@@ -110,7 +108,7 @@ with col2:
 
         # إدخال الحي
         districts = district_centers
-        district_options = districts['district_name'].tolist()
+        district_options = districts['district'].dropna().unique().tolist()
         
         district = st.selectbox("اختر الحي 🏙️", district_options)
 

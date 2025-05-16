@@ -106,9 +106,9 @@ with col2:
             furnished = st.selectbox("الفلة مؤثثة🪑؟", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
 
         # إدخال الحي
-        districts = district_centers[district_centers['city_name'] == 'الرياض']
-        district_options = [(row['district_id'], row['district_name'], row['city_name']) for _, row in districts.iterrows()]
-        selected_district = st.selectbox("اختر الحي 🏙️", district_options, format_func=lambda x: f"{x[1]} ({x[2]})")
+        districts = district_centers
+        district_options = [(row['district_id'], row['district_name']) for _, row in districts.iterrows()]
+        selected_district = st.selectbox("اختر الحي 🏙️", district_options, format_func=lambda x: x[1])
         district = selected_district[1]
 
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")

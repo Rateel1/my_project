@@ -107,9 +107,9 @@ with col2:
 
         # إدخال الحي
         districts = district_centers
-        district_options = [(row['district_id'], row['district_name']) for _, row in districts.iterrows()]
-        selected_district = st.selectbox("اختر الحي 🏙️", district_options, format_func=lambda x: x[1])
-        district = selected_district[1]
+        district_options = districts['district_name'].tolist()
+        
+        district = st.selectbox("اختر الحي 🏙️", district_options)
 
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
         if submitted:

@@ -52,6 +52,9 @@ def predict_price(new_record):
 
 # تحميل مواقع الأحياء
 district_centers = pd.read_excel("district_centers.xlsx")
+st.write("🧪 Available columns in 'district_centers':", district_centers.columns.tolist())
+st.write("🧪 Sample rows from district_centers:")
+st.dataframe(district_centers.head())
 
 # الواجهة الرئيسية: خريطة واستمارة الإدخال
 col1, col2 = st.columns([1, 2])

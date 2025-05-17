@@ -150,8 +150,6 @@ with col2:
             st.metric(label="السعر التقريبي", value=f"ريال {predicted_price:,.2f}")
 
 st.header("📊 رؤى")
-
-st.header("📊 رؤى")
 # Second Row: Feature Importance, Deals Count, Deals Cost
 
 # --- 📊 Feature Importance Section ---
@@ -192,7 +190,7 @@ with col3:
             x="تأثيرها على السعر",
             y="الخاصية",
             orientation="h",
-            title="Feature Importance",
+            title="تأثير الخصائص",
             color="تأثيرها على السعر"
         )
         st.plotly_chart(fig_features)

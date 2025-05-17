@@ -41,7 +41,7 @@ st.markdown(
     div[data-testid="stForm"] select,
     div[data-testid="stForm"] button,
     div[data-testid="stForm"] div[role="slider"] {
-        font-size: 1.4rem !important;
+        font-size: 1.6rem !important;
     }
     </style>
     """,

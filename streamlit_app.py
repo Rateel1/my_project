@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st 
 import joblib
 import pandas as pd
 import numpy as np
@@ -65,8 +65,8 @@ with col1:
         filtered = district_centers[district_centers['district'] == st.session_state['selected_district']]
         if not filtered.empty:
             selected_row = filtered.iloc[0]
-            st.session_state['location_lat'] = selected_row['lat']
-            st.session_state['location_lng'] = selected_row['lng']
+            st.session_state['location_lat'] = selected_row['location.lat']
+            st.session_state['location_lng'] = selected_row['location.lng']
         else:
             st.warning("⚠️ لا يمكن العثور على الموقع الجغرافي لهذا الحي. تأكد من أن الحي متاح في ملف الإكسل.")
 
@@ -93,7 +93,7 @@ with col1:
         lat_clicked = st.session_state['location_lat']
         lng_clicked = st.session_state['location_lng']
         distances = district_centers.apply(
-            lambda row: haversine_distance(lat_clicked, lng_clicked, row['lat'], row['lng']),
+            lambda row: haversine_distance(lat_clicked, lng_clicked, row['location.lat'], row['location.lng']),
             axis=1
         )
         closest_index = distances.idxmin()
@@ -129,8 +129,8 @@ with col2:
 
         if not st.session_state['location_manually_set']:
             district_row = district_centers[district_centers['district'] == district].iloc[0]
-            st.session_state['location_lat'] = district_row['lat']
-            st.session_state['location_lng'] = district_row['lng']
+            st.session_state['location_lat'] = district_row['location.lat']
+            st.session_state['location_lng'] = district_row['location.lng']
 
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
         if submitted:
@@ -146,6 +146,8 @@ with col2:
                 predicted_price = predict_price(new_record)
             st.success('تمت عملية التوقع بنجاح!')
             st.metric(label="السعر التقريبي", value=f"ريال {predicted_price:,.2f}")
+
+st.header("📊 رؤى")
 
 st.header("📊 رؤى")
 # Second Row: Feature Importance, Deals Count, Deals Cost

@@ -9,6 +9,35 @@ from folium.plugins import MeasureControl, MousePosition
 from math import radians, sin, cos, sqrt, atan2
 import os
 import plotly.express as px
+# ✅ إضافة CSS لمحاذاة النصوص إلى اليمين
+st.markdown(
+    """
+    <style>
+        /* اجعل كل النصوص من اليمين لليسار */
+        body, .css-1d391kg, .css-1v0mbdj, .css-1cpxqw2 {
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* ضبط عناوين الأعمدة في البطاقات */
+        .css-1v0mbdj {
+            text-align: right !important;
+        }
+
+        /* عناوين القسم (subheader & header) */
+        h1, h2, h3, h4, h5, h6 {
+            text-align: right;
+        }
+
+        /* نصوص الحقول الجانبية */
+        .css-1offfwp {
+            direction: rtl;
+            text-align: right;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # إعداد الصفحة
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")

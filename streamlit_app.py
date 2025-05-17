@@ -10,49 +10,18 @@ from math import radians, sin, cos, sqrt, atan2
 import os
 import plotly.express as px
 
-
 # إعداد الصفحة
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
-# ✅ إضافة CSS لمحاذاة النصوص إلى اليمين
+
+# ✅ إضافة CSS لمحاذاة النصوص إلى اليمين وتكبير الخط
 st.markdown(
-    st.markdown(
     """
     <style>
     /* اجعل كل النصوص من اليمين لليسار */
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
-        text-align: right;
-    }
+        text-align
 
-    /* ضبط عناوين الأقسام */
-    h1, h2, h3, h4, h5, h6 {
-        text-align: right;
-        font-size: 1.6rem !important;
-    }
-
-    /* نصوص الحقول الجانبية */
-    section[data-testid="stSidebar"] {
-        direction: rtl;
-        text-align: right;
-    }
-
-    /* تكبير حجم الخط داخل نموذج إدخال التفاصيل */
-    div[data-testid="stForm"] label,
-    div[data-testid="stForm"] input,
-    div[data-testid="stForm"] select,
-    div[data-testid="stForm"] button,
-    div[data-testid="stForm"] div[role="slider"] {
-        font-size: 1.2rem !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-      </style>
-    """,
-    unsafe_allow_html=True
-)
 # تحميل النموذج
 @st.cache_resource
 def load_model():

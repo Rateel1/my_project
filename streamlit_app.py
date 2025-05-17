@@ -8,6 +8,7 @@ from PIL import Image
 from folium.plugins import MeasureControl, MousePosition
 from math import radians, sin, cos, sqrt, atan2
 import os
+import plotly.express as px
 
 # إعداد الصفحة
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")

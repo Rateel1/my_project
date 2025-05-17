@@ -20,7 +20,34 @@ st.markdown(
     /* اجعل كل النصوص من اليمين لليسار */
     html, body, [data-testid="stAppViewContainer"] {
         direction: rtl;
-        text-align
+        text-align: right;
+    }
+
+    /* ضبط عناوين الأقسام */
+    h1, h2, h3, h4, h5, h6 {
+        text-align: right;
+        font-size: 1.6rem !important;
+    }
+
+    /* نصوص الحقول الجانبية */
+    section[data-testid="stSidebar"] {
+        direction: rtl;
+        text-align: right;
+    }
+
+    /* تكبير حجم الخط داخل نموذج إدخال التفاصيل */
+    div[data-testid="stForm"] label,
+    div[data-testid="stForm"] input,
+    div[data-testid="stForm"] select,
+    div[data-testid="stForm"] button,
+    div[data-testid="stForm"] div[role="slider"] {
+        font-size: 1.4rem !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # تحميل النموذج
 @st.cache_resource

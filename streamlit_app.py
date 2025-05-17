@@ -53,6 +53,8 @@ def predict_price(new_record):
 # تحميل مواقع الأحياء
 district_centers = pd.read_excel("district_centers.xlsx")
 
+# تأكد من أن اسم الحي موجود كقائمة
+district_centers = district_centers.dropna(subset=['district'])
 
 # الواجهة الرئيسية: خريطة واستمارة الإدخال
 col1, col2 = st.columns([1, 2])
@@ -62,7 +64,9 @@ with col1:
     riyadh_lat, riyadh_lng = 24.7136, 46.6753
     st.session_state.setdefault('location_lat', riyadh_lat)
     st.session_state.setdefault('location_lng', riyadh_lng)
+    st.session_state.setdefault('location_manually_set', False)
 
+    # خريطة
     m = folium.Map(
         location=[st.session_state['location_lat'], st.session_state['location_lng']],
         zoom_start=12, tiles="CartoDB positron", control_scale=True
@@ -77,10 +81,12 @@ with col1:
     )
     marker.add_to(m)
 
+    # عرض الخريطة والتقاط الإحداثيات إذا تم الضغط
     map_data = st_folium(m, width=700, height=450)
     if map_data.get('last_clicked'):
         st.session_state['location_lat'] = map_data['last_clicked']['lat']
         st.session_state['location_lng'] = map_data['last_clicked']['lng']
+        st.session_state['location_manually_set'] = True
 
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
@@ -107,10 +113,14 @@ with col2:
             furnished = st.selectbox("الفلة مؤثثة🪑؟", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
 
         # إدخال الحي
-        districts = district_centers
-        district_options = districts['district'].dropna().unique().tolist()
-        
+        district_options = district_centers['district'].unique().tolist()
         district = st.selectbox("اختر الحي 🏙️", district_options)
+
+        # إذا لم يتم تعيين الموقع يدويًا، يتم تعيين الإحداثيات بناءً على الحي المختار
+        if not st.session_state.get('location_manually_set', False):
+            district_row = district_centers[district_centers['district'] == district].iloc[0]
+            st.session_state['location_lat'] = district_row['lat']
+            st.session_state['location_lng'] = district_row['lng']
 
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
         if submitted:
@@ -127,7 +137,6 @@ with col2:
             st.success('تمت عملية التوقع بنجاح!')
             st.metric(label="السعر التقريبي", value=f"ريال {predicted_price:,.2f}")
 
-# Bottom section: Visualization
 st.header("📊 رؤى")
 # Second Row: Feature Importance, Deals Count, Deals Cost
 

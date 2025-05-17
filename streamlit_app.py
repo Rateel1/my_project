@@ -6,22 +6,10 @@ import folium
 from streamlit_folium import st_folium
 from PIL import Image
 from folium.plugins import MeasureControl, MousePosition
+from math import radians, sin, cos, sqrt, atan2
 
 # إعداد الصفحة
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
-
-# العنوان الرئيسي
-st.markdown("<h1 style='text-align: center; direction: rtl;'> 🏠لوحة  المعلومات  العقارية</h1>", unsafe_allow_html=True)
-
-# تنسيقات CSS مخصصة
-st.markdown("""
-<style>
-.stApp { background-color: #f0f2f6; }
-.stButton>button { color: #ffffff; background-color: #4CAF50; border-radius: 5px; }
-.stMetricLabel { font-size: 20px; }
-.stMetricValue { font-size: 40px; color: #4CAF50; }
-</style>
-""", unsafe_allow_html=True)
 
 # تحميل النموذج
 @st.cache_resource
@@ -39,34 +27,45 @@ model_columns = load_model_columns()
 def predict_price(new_record):
     new_record_df = pd.DataFrame([new_record])
     new_record_df = pd.get_dummies(new_record_df)
-
-    # إضافة الأعمدة المفقودة
     for col in model_columns:
         if col not in new_record_df:
             new_record_df[col] = 0
-    new_record_df = new_record_df[model_columns]
-
-    new_record_df = new_record_df.astype(float)
+    new_record_df = new_record_df[model_columns].astype(float)
     log_price = model.predict(new_record_df)[0]
     return np.expm1(log_price)
 
+# دالة لحساب المسافة
+def haversine_distance(lat1, lng1, lat2, lng2):
+    R = 6371
+    dlat = radians(lat2 - lat1)
+    dlng = radians(lng2 - lng1)
+    a = sin(dlat/2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlng/2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1-a))
+    return R * c
+
 # تحميل مواقع الأحياء
 district_centers = pd.read_excel("district_centers.xlsx")
-
-# تأكد من أن اسم الحي موجود كقائمة
 district_centers = district_centers.dropna(subset=['district'])
 
-# الواجهة الرئيسية: خريطة واستمارة الإدخال
+# الحالة المبدئية
+riyadh_lat, riyadh_lng = 24.7136, 46.6753
+st.session_state.setdefault('location_lat', riyadh_lat)
+st.session_state.setdefault('location_lng', riyadh_lng)
+st.session_state.setdefault('location_manually_set', False)
+st.session_state.setdefault('selected_district', district_centers.iloc[0]['district'])
+
+# واجهة المستخدم
 col1, col2 = st.columns([1, 2])
 
 with col1:
     st.subheader("📍 اختر الموقع")
-    riyadh_lat, riyadh_lng = 24.7136, 46.6753
-    st.session_state.setdefault('location_lat', riyadh_lat)
-    st.session_state.setdefault('location_lng', riyadh_lng)
-    st.session_state.setdefault('location_manually_set', False)
 
-    # خريطة
+    if st.button("🔁 إعادة تعيين الموقع"):
+        st.session_state['location_manually_set'] = False
+        selected_row = district_centers[district_centers['district'] == st.session_state['selected_district']].iloc[0]
+        st.session_state['location_lat'] = selected_row['lat']
+        st.session_state['location_lng'] = selected_row['lng']
+
     m = folium.Map(
         location=[st.session_state['location_lat'], st.session_state['location_lng']],
         zoom_start=12, tiles="CartoDB positron", control_scale=True
@@ -81,12 +80,21 @@ with col1:
     )
     marker.add_to(m)
 
-    # عرض الخريطة والتقاط الإحداثيات إذا تم الضغط
     map_data = st_folium(m, width=700, height=450)
     if map_data.get('last_clicked'):
         st.session_state['location_lat'] = map_data['last_clicked']['lat']
         st.session_state['location_lng'] = map_data['last_clicked']['lng']
         st.session_state['location_manually_set'] = True
+
+        lat_clicked = st.session_state['location_lat']
+        lng_clicked = st.session_state['location_lng']
+        distances = district_centers.apply(
+            lambda row: haversine_distance(lat_clicked, lng_clicked, row['lat'], row['lng']),
+            axis=1
+        )
+        closest_index = distances.idxmin()
+        closest_district = district_centers.loc[closest_index, 'district']
+        st.session_state['selected_district'] = closest_district
 
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
@@ -100,7 +108,6 @@ with col2:
             livings = st.slider("عدد غرف المعيشة 🛋️", 1, 7, 1)
             wc = st.slider("عدد دورات المياه 🚽", 2, 5, 2)
             area = st.number_input("المساحة (متر مربع) 📏", 150.0, 600.0, 150.0)
-
         with col_b:
             street_width = st.selectbox("عرض الشارع (متر) 🛣️", [10, 12, 15, 18, 20, 25], index=2)
             age = st.number_input("عمر العقار 🗓️", 0, 5, 1)
@@ -112,12 +119,11 @@ with col2:
             ketchen = st.selectbox("المطبخ مجهز🍳؟", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
             furnished = st.selectbox("الفلة مؤثثة🪑؟", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
 
-        # إدخال الحي
         district_options = district_centers['district'].unique().tolist()
-        district = st.selectbox("اختر الحي 🏙️", district_options)
+        district = st.selectbox("اختر الحي 🏙️", district_options, index=district_options.index(st.session_state['selected_district']))
+        st.session_state['selected_district'] = district
 
-        # إذا لم يتم تعيين الموقع يدويًا، يتم تعيين الإحداثيات بناءً على الحي المختار
-        if not st.session_state.get('location_manually_set', False):
+        if not st.session_state['location_manually_set']:
             district_row = district_centers[district_centers['district'] == district].iloc[0]
             st.session_state['location_lat'] = district_row['lat']
             st.session_state['location_lng'] = district_row['lng']

@@ -184,13 +184,14 @@ col3, col4, col5 = st.columns([1, 1, 1])
 
 
 with col3:
+    st.subheader("📊 تأثير الخصائص على السعر")
     if df_features is not None and all(col in df_features.columns for col in ["الخاصية", "تأثيرها على السعر"]):
         fig_features = px.bar(
             df_features,
             x="تأثيرها على السعر",
             y="الخاصية",
             orientation="h",
-            title="تأثير الخصائص",
+        
             color="تأثيرها على السعر"
         )
         st.plotly_chart(fig_features)

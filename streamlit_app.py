@@ -62,9 +62,13 @@ with col1:
 
     if st.button("🔁 إعادة تعيين الموقع"):
         st.session_state['location_manually_set'] = False
-        selected_row = district_centers[district_centers['district'] == st.session_state['selected_district']].iloc[0]
-        st.session_state['location_lat'] = selected_row['lat']
-        st.session_state['location_lng'] = selected_row['lng']
+        filtered = district_centers[district_centers['district'] == st.session_state['selected_district']]
+        if not filtered.empty:
+            selected_row = filtered.iloc[0]
+            st.session_state['location_lat'] = selected_row['lat']
+            st.session_state['location_lng'] = selected_row['lng']
+        else:
+            st.warning("⚠️ لا يمكن العثور على الموقع الجغرافي لهذا الحي. تأكد من أن الحي متاح في ملف الإكسل.")
 
     m = folium.Map(
         location=[st.session_state['location_lat'], st.session_state['location_lng']],

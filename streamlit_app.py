@@ -15,30 +15,41 @@ import plotly.express as px
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
 # ✅ إضافة CSS لمحاذاة النصوص إلى اليمين
 st.markdown(
+    st.markdown(
     """
     <style>
-        /* اجعل كل النصوص من اليمين لليسار */
-        body, .css-1d391kg, .css-1v0mbdj, .css-1cpxqw2 {
-            direction: rtl;
-            text-align: right;
-        }
+    /* اجعل كل النصوص من اليمين لليسار */
+    html, body, [data-testid="stAppViewContainer"] {
+        direction: rtl;
+        text-align: right;
+    }
 
-        /* ضبط عناوين الأعمدة في البطاقات */
-        .css-1v0mbdj {
-            text-align: right !important;
-        }
+    /* ضبط عناوين الأقسام */
+    h1, h2, h3, h4, h5, h6 {
+        text-align: right;
+        font-size: 1.6rem !important;
+    }
 
-        /* عناوين القسم (subheader & header) */
-        h1, h2, h3, h4, h5, h6 {
-            text-align: right;
-        }
+    /* نصوص الحقول الجانبية */
+    section[data-testid="stSidebar"] {
+        direction: rtl;
+        text-align: right;
+    }
 
-        /* نصوص الحقول الجانبية */
-        .css-1offfwp {
-            direction: rtl;
-            text-align: right;
-        }
+    /* تكبير حجم الخط داخل نموذج إدخال التفاصيل */
+    div[data-testid="stForm"] label,
+    div[data-testid="stForm"] input,
+    div[data-testid="stForm"] select,
+    div[data-testid="stForm"] button,
+    div[data-testid="stForm"] div[role="slider"] {
+        font-size: 1.2rem !important;
+    }
     </style>
+    """,
+    unsafe_allow_html=True
+)
+
+      </style>
     """,
     unsafe_allow_html=True
 )

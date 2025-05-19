@@ -97,8 +97,9 @@ col1, col2 = st.columns([1, 2])
 
 with col1:
 
-    <h1 style='font-size:2.4rem;'>📍 اختر الموقع</h1>
-    """, unsafe_allow_html=True)
+    
+    st.markdown("<h1 style='font-size:2.4rem;'>📍 اختر الموقع</h1>", unsafe_allow_html=True)
+
 
     if st.button("🔁 إعادة تعيين الموقع"):
         st.session_state['location_manually_set'] = False

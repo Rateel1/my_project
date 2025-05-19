@@ -185,14 +185,15 @@ with col2:
         district = st.selectbox("", district_options, index=district_options.index(st.session_state['selected_district']))
         st.session_state['selected_district'] = district
 
+     
         if not st.session_state['location_manually_set']:
-            district_row = district_centers[district_centers['district'] == district].iloc[0]
-            st.session_state['location_lat'] = district_row['location.lat']
-            st.session_state['location_lng'] = district_row['location.lng']
+    district_row = district_centers[district_centers['district'] == district].iloc[0]
+    st.session_state['location_lat'] = district_row['location.lat']
+    st.session_state['location_lng'] = district_row['location.lng']
 
-        submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
-        if submitted:
-        
+submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
+
+if submitted:
     with st.spinner('جاري الحساب...'):
         new_record = {
             'beds': beds,
@@ -211,8 +212,7 @@ with col2:
         predicted_price = predict_price(new_record)
         st.success('تمت عملية التوقع بنجاح!')
         st.metric(label="السعر التقريبي", value=f"ريال {predicted_price:,.2f}")
-
-           
+       
 
 st.markdown("""
     <h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>

@@ -26,7 +26,7 @@ st.markdown(
     /* ضبط عناوين الأقسام */
     h1, h2, h3, h4, h5, h6 {
         text-align: right;
-        font-size: 1.6rem !important;
+        font-size: 2.4rem !important;
     }
 
     /* نصوص الحقول الجانبية */

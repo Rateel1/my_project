@@ -96,7 +96,10 @@ st.session_state.setdefault('selected_district', district_centers.iloc[0]['distr
 col1, col2 = st.columns([1, 2])
 
 with col1:
-    st.subheader("📍 اختر الموقع")
+   
+    st.markdown("""
+    <h1 style='font-size:2.4rem;'>📍 اختر الموقع</h1>
+""", unsafe_allow_html=True)
 
     if st.button("🔁 إعادة تعيين الموقع"):
         st.session_state['location_manually_set'] = False
@@ -141,7 +144,10 @@ with col1:
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
 with col2:
-    st.subheader("🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية")
+   
+    st.markdown("""
+    <h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>
+""", unsafe_allow_html=True)
 
     with st.form("house_details_form"):
         col_a, col_b = st.columns(2)

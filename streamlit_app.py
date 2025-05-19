@@ -24,9 +24,9 @@ st.markdown(
     }
 
     /* ضبط عناوين الأقسام */
-    h1, h2, h3, h4, h5, h6 {
+    h2, h3, h4, h5, h6 {
         text-align: right;
-        font-size: 2.4rem !important;
+        font-size: 1.4rem !important;
     }
 
     /* نصوص الحقول الجانبية */
@@ -187,7 +187,7 @@ with col2:
 
 
 st.markdown("""
-    <h1 style='font-size:3rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>
+    <h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>
 """, unsafe_allow_html=True)
 # Second Row: Feature Importance, Deals Count, Deals Cost
 

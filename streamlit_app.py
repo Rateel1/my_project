@@ -142,6 +142,7 @@ with col1:
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
 with col2:
+with col2:
     st.markdown("<h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>", unsafe_allow_html=True)
 
     with st.form("house_details_form"):
@@ -185,38 +186,38 @@ with col2:
         district = st.selectbox("", district_options, index=district_options.index(st.session_state['selected_district']))
         st.session_state['selected_district'] = district
 
-     
         if not st.session_state['location_manually_set']:
-    district_row = district_centers[district_centers['district'] == district].iloc[0]
-    st.session_state['location_lat'] = district_row['location.lat']
-    st.session_state['location_lng'] = district_row['location.lng']
+            district_row = district_centers[district_centers['district'] == district].iloc[0]
+            st.session_state['location_lat'] = district_row['location.lat']
+            st.session_state['location_lng'] = district_row['location.lng']
 
-submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
+        submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
 
-if submitted:
-    with st.spinner('جاري الحساب...'):
-        new_record = {
-            'beds': beds,
-            'livings': livings,
-            'wc': wc,
-            'area': area,
-            'street_width': street_width,
-            'age': age,
-            'street_direction': street_direction,
-            'ketchen': ketchen,
-            'furnished': furnished,
-            'location.lat': st.session_state['location_lat'],
-            'location.lng': st.session_state['location_lng'],
-            'district': district
-        }
-        predicted_price = predict_price(new_record)
-        st.success('تمت عملية التوقع بنجاح!')
-        st.metric(label="السعر التقريبي", value=f"ريال {predicted_price:,.2f}")
-       
+        if submitted:
+            with st.spinner('جاري الحساب...'):
+                new_record = {
+                    'beds': beds,
+                    'livings': livings,
+                    'wc': wc,
+                    'area': area,
+                    'street_width': street_width,
+                    'age': age,
+                    'street_direction': street_direction,
+                    'ketchen': ketchen,
+                    'furnished': furnished,
+                    'location.lat': st.session_state['location_lat'],
+                    'location.lng': st.session_state['location_lng'],
+                    'district': district
+                }
+                predicted_price = predict_price(new_record)
+                st.success('تمت عملية التوقع بنجاح!')
+                st.metric(label="السعر التقريبي", value=f"ريال {predicted_price:,.2f}")
 
-st.markdown("""
-    <h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>
-""", unsafe_allow_html=True)
+    st.markdown("""
+        <h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>
+    """, unsafe_allow_html=True)
+
+
 # Second Row: Feature Importance, Deals Count, Deals Cost
 
 # --- 📊 Feature Importance Section ---

@@ -93,13 +93,11 @@ st.session_state.setdefault('location_manually_set', False)
 st.session_state.setdefault('selected_district', district_centers.iloc[0]['district'])
 
 # واجهة المستخدم
+
 col1, col2 = st.columns([1, 2])
 
 with col1:
-
-    
     st.markdown("<h1 style='font-size:2.4rem;'>📍 اختر الموقع</h1>", unsafe_allow_html=True)
-
 
     if st.button("🔁 إعادة تعيين الموقع"):
         st.session_state['location_manually_set'] = False
@@ -144,28 +142,23 @@ with col1:
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
 with col2:
-    st.markdown("""
-    <h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>
-    """, unsafe_allow_html=True)
+    st.markdown("<h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>", unsafe_allow_html=True)
 
     with st.form("house_details_form"):
         col_a, col_b = st.columns(2)
 
-        
         with col_a:
-         st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد غرف النوم 🛏️</div>", unsafe_allow_html=True)
-          beds = st.selectbox("", list(range(3, 8)), index=0)
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد غرف النوم 🛏️</div>", unsafe_allow_html=True)
+            beds = st.selectbox("", list(range(3, 8)), index=0)
 
-          st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد غرف المعيشة 🛋️</div>", unsafe_allow_html=True)
-          livings = st.selectbox("", list(range(1, 8)), index=0)
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد غرف المعيشة 🛋️</div>", unsafe_allow_html=True)
+            livings = st.selectbox("", list(range(1, 8)), index=0)
 
-          st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد دورات المياه 🚽</div>", unsafe_allow_html=True)
-          wc = st.selectbox("", list(range(2, 6)), index=0)
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد دورات المياه 🚽</div>", unsafe_allow_html=True)
+            wc = st.selectbox("", list(range(2, 6)), index=0)
 
-          st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>المساحة (متر مربع) 📏</div>", unsafe_allow_html=True)
-           area = st.number_input("", 150.0, 600.0, 150.0)
-
-           
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>المساحة (متر مربع) 📏</div>", unsafe_allow_html=True)
+            area = st.number_input("", 150.0, 600.0, 150.0)
 
         with col_b:
             st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عرض الشارع (متر) 🛣️</div>", unsafe_allow_html=True)
@@ -181,14 +174,13 @@ with col2:
                 "الفلة تقع على ثلاثة شوارع", "الفلة تقع على أربعة شوارع"
             ])
 
-            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>المطبخ مجهز🍳؟</div>", unsafe_allow_html=True)
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>المطبخ مجهز 🍳؟</div>", unsafe_allow_html=True)
             ketchen = st.selectbox("", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
 
-            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>الفلة مؤثثة🪑؟</div>", unsafe_allow_html=True)
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>الفلة مؤثثة 🪑؟</div>", unsafe_allow_html=True)
             furnished = st.selectbox("", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
 
         district_options = district_centers['district'].unique().tolist()
-
         st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>اختر الحي 🏙️</div>", unsafe_allow_html=True)
         district = st.selectbox("", district_options, index=district_options.index(st.session_state['selected_district']))
         st.session_state['selected_district'] = district
@@ -200,20 +192,27 @@ with col2:
 
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
         if submitted:
-            with st.spinner('جاري الحساب...'):
-                
-                new_record = {
-                    'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
-                    'street_width': street_width, 'age': age, 'street_direction': street_direction,
-                    'ketchen': ketchen, 'furnished': furnished,
-                    'location.lat': st.session_state['location_lat'],
-                    'location.lng': st.session_state['location_lng'],
-                    'district': district
-                }
-                predicted_price = predict_price(new_record)
-            st.success('تمت عملية التوقع بنجاح!')
-            st.metric(label="السعر التقريبي", value=f"ريال {predicted_price:,.2f}")
+        
+    with st.spinner('جاري الحساب...'):
+        new_record = {
+            'beds': beds,
+            'livings': livings,
+            'wc': wc,
+            'area': area,
+            'street_width': street_width,
+            'age': age,
+            'street_direction': street_direction,
+            'ketchen': ketchen,
+            'furnished': furnished,
+            'location.lat': st.session_state['location_lat'],
+            'location.lng': st.session_state['location_lng'],
+            'district': district
+        }
+        predicted_price = predict_price(new_record)
+        st.success('تمت عملية التوقع بنجاح!')
+        st.metric(label="السعر التقريبي", value=f"ريال {predicted_price:,.2f}")
 
+           
 
 st.markdown("""
     <h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>

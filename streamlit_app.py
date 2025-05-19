@@ -187,7 +187,7 @@ with col2:
 
 
 st.markdown("""
-    <h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>
+    <h1 style='font-size:3rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>
 """, unsafe_allow_html=True)
 # Second Row: Feature Importance, Deals Count, Deals Cost
 

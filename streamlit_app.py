@@ -185,7 +185,10 @@ with col2:
             st.success('تمت عملية التوقع بنجاح!')
             st.metric(label="السعر التقريبي", value=f"ريال {predicted_price:,.2f}")
 
-st.header("📊 رؤى")
+
+st.markdown("""
+    <h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>
+""", unsafe_allow_html=True)
 # Second Row: Feature Importance, Deals Count, Deals Cost
 
 # --- 📊 Feature Importance Section ---

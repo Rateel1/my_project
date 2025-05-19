@@ -96,10 +96,9 @@ st.session_state.setdefault('selected_district', district_centers.iloc[0]['distr
 col1, col2 = st.columns([1, 2])
 
 with col1:
-   
-    st.markdown("""
+
     <h1 style='font-size:2.4rem;'>📍 اختر الموقع</h1>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
     if st.button("🔁 إعادة تعيين الموقع"):
         st.session_state['location_manually_set'] = False
@@ -144,53 +143,54 @@ with col1:
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
 with col2:
-   
     st.markdown("""
     <h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
     with st.form("house_details_form"):
         col_a, col_b = st.columns(2)
-       
+
+        
         with col_a:
-        st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد غرف النوم 🛏️</div>", unsafe_allow_html=True)
-        beds = st.slider("", 3, 7, 3)
-        
-        st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد غرف المعيشة 🛋️</div>", unsafe_allow_html=True)
-        livings = st.slider("", 1, 7, 1)
-        
-        st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد دورات المياه 🚽</div>", unsafe_allow_html=True)
-        wc = st.slider("", 2, 5, 2)
-        
-        st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>المساحة (متر مربع) 📏</div>", unsafe_allow_html=True)
-        area = st.number_input("", 150.0, 600.0, 150.0)
+         st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد غرف النوم 🛏️</div>", unsafe_allow_html=True)
+          beds = st.selectbox("", list(range(3, 8)), index=0)
+
+          st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد غرف المعيشة 🛋️</div>", unsafe_allow_html=True)
+          livings = st.selectbox("", list(range(1, 8)), index=0)
+
+          st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عدد دورات المياه 🚽</div>", unsafe_allow_html=True)
+          wc = st.selectbox("", list(range(2, 6)), index=0)
+
+          st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>المساحة (متر مربع) 📏</div>", unsafe_allow_html=True)
+           area = st.number_input("", 150.0, 600.0, 150.0)
+
+           
 
         with col_b:
-        st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عرض الشارع (متر) 🛣️</div>", unsafe_allow_html=True)
-        street_width = st.selectbox("", [10, 12, 15, 18, 20, 25], index=2)
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عرض الشارع (متر) 🛣️</div>", unsafe_allow_html=True)
+            street_width = st.selectbox("", [10, 12, 15, 18, 20, 25], index=2)
 
-        st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عمر العقار 🗓️</div>", unsafe_allow_html=True)
-        age = st.number_input("", 0, 5, 1)
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>عمر العقار 🗓️</div>", unsafe_allow_html=True)
+            age = st.number_input("", 0, 5, 1)
 
-        st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>نوع الواجهة 🧭</div>", unsafe_allow_html=True)
-        street_direction = st.selectbox("", [
-            "واجهة شمالية", "واجهة شرقية", "واجهة غربية", "واجهة جنوبية",
-            "واجهة شمالية شرقية", "واجهة جنوبية شرقية", "واجهة جنوبية غربية", "واجهة شمالية غربية",
-            "الفلة تقع على ثلاثة شوارع", "الفلة تقع على أربعة شوارع"
-        ])
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>نوع الواجهة 🧭</div>", unsafe_allow_html=True)
+            street_direction = st.selectbox("", [
+                "واجهة شمالية", "واجهة شرقية", "واجهة غربية", "واجهة جنوبية",
+                "واجهة شمالية شرقية", "واجهة جنوبية شرقية", "واجهة جنوبية غربية", "واجهة شمالية غربية",
+                "الفلة تقع على ثلاثة شوارع", "الفلة تقع على أربعة شوارع"
+            ])
 
-        st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>المطبخ مجهز🍳؟</div>", unsafe_allow_html=True)
-        ketchen = st.selectbox("", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>المطبخ مجهز🍳؟</div>", unsafe_allow_html=True)
+            ketchen = st.selectbox("", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
 
-        st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>الفلة مؤثثة🪑؟</div>", unsafe_allow_html=True)
-        furnished = st.selectbox("", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
+            st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>الفلة مؤثثة🪑؟</div>", unsafe_allow_html=True)
+            furnished = st.selectbox("", [0, 1], format_func=lambda x: "نعم" if x == 1 else "لا")
 
-    district_options = district_centers['district'].unique().tolist()
-    
-    st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>اختر الحي 🏙️</div>", unsafe_allow_html=True)
-    district = st.selectbox("", district_options, index=district_options.index(st.session_state['selected_district']))
-    st.session_state['selected_district'] = district
-      
+        district_options = district_centers['district'].unique().tolist()
+
+        st.markdown("<div style='font-size:2.2rem; font-weight:bold;'>اختر الحي 🏙️</div>", unsafe_allow_html=True)
+        district = st.selectbox("", district_options, index=district_options.index(st.session_state['selected_district']))
+        st.session_state['selected_district'] = district
 
         if not st.session_state['location_manually_set']:
             district_row = district_centers[district_centers['district'] == district].iloc[0]
@@ -200,6 +200,7 @@ with col2:
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
         if submitted:
             with st.spinner('جاري الحساب...'):
+                
                 new_record = {
                     'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
                     'street_width': street_width, 'age': age, 'street_direction': street_direction,

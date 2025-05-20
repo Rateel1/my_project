@@ -223,8 +223,8 @@ with col3:
         )
         fig_features.update_layout(
         margin=dict(l=100, r=20, t=40, b=40),  # ضبط الهوامش
-        yaxis=dict(tickfont=dict(size=12))     # تقليل حجم الخط للمحور Y إذا لزم
-    )
+        yaxis=dict(tickfont=dict(size=12),   title=dict( text="الخاصية",standoff=30)))
+    
         st.plotly_chart(fig_features , use_container_width=True)
     else:
         st.error("تحقق من أسماء الأعمدة: 'الخاصية' و 'تأثيرها على السعر' غير موجودة في df_features")

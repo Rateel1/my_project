@@ -211,15 +211,21 @@ col3, col4, col5 = st.columns([1, 1, 1])
 with col3:
     st.subheader("📊 تأثير الخصائص على السعر")
     if df_features is not None and all(col in df_features.columns for col in ["الخاصية", "تأثيرها على السعر"]):
+  
         fig_features = px.bar(
             df_features,
             x="تأثيرها على السعر",
             y="الخاصية",
             orientation="h",
         
-            color="تأثيرها على السعر"
+            color="تأثيرها على السعر",
+        height=400  # تقليل الارتفاع
         )
-        st.plotly_chart(fig_features)
+        fig_features.update_layout(
+        margin=dict(l=100, r=20, t=40, b=40),  # ضبط الهوامش
+        yaxis=dict(tickfont=dict(size=12))     # تقليل حجم الخط للمحور Y إذا لزم
+    )
+        st.plotly_chart(fig_features , use_container_width=True)
     else:
         st.error("تحقق من أسماء الأعمدة: 'الخاصية' و 'تأثيرها على السعر' غير موجودة في df_features")
 

@@ -177,32 +177,54 @@ with col2:
 
 st.markdown("<h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>", unsafe_allow_html=True)
 
-FEATURE_IMPORTANCE_FILE = "feature importance.csv"
+# --- 📊 Feature Importance Section ---
+FEATURE_IMPORTANCE_FILE = "feature importance.csv"  # Ensure file name matches your actual file
+
 @st.cache_data
 def load_feature_importance_data():
+    """Loads feature importance data from CSV."""
     if not os.path.exists(FEATURE_IMPORTANCE_FILE):
         st.error(f"⚠️ Missing file: {FEATURE_IMPORTANCE_FILE}")
         return None
+
     try:
         df = pd.read_csv(FEATURE_IMPORTANCE_FILE)
-        if not {"الخاصية", "تأثيرها على السعر"}.issubset(df.columns):
-            st.error("⚠️ تحقق من الأعمدة المطلوبة في ملف الخصائص.")
+
+        # ✅ Check column names to avoid KeyError
+        expected_columns = {"الخاصية", "تأثيرها على السعر"}
+        if not expected_columns.issubset(df.columns):
+            missing_cols = expected_columns - set(df.columns)
+            st.error(f"⚠️ CSV file is missing required columns: {missing_cols}")
             return None
+
         return df
+
     except Exception as e:
         st.error(f"⚠️ Error reading {FEATURE_IMPORTANCE_FILE}: {e}")
         return None
 
+
 df_features = load_feature_importance_data()
-col3, col4, col5 = st.columns(3)
+col3, col4, col5 = st.columns([1, 1, 1])
+
 
 with col3:
     st.subheader("📊 تأثير الخصائص على السعر")
-    if df_features is not None:
-        fig = px.bar(df_features, x="تأثيرها على السعر", y="الخاصية", orientation="h", color="تأثيرها على السعر")
-        st.plotly_chart(fig)
+    if df_features is not None and all(col in df_features.columns for col in ["الخاصية", "تأثيرها على السعر"]):
+        fig_features = px.bar(
+            df_features,
+            x="تأثيرها على السعر",
+            y="الخاصية",
+            orientation="h",
+        
+            color="تأثيرها على السعر"
+        )
+        st.plotly_chart(fig_features)
+    else:
+        st.error("تحقق من أسماء الأعمدة: 'الخاصية' و 'تأثيرها على السعر' غير موجودة في df_features")
 
-# --- بيانات الصفقات ---
+    
+# File paths for CSV files
 DEALS_FILES = {
     "2022": "selected2022_a.csv",
     "2023": "selected2023_a.csv",
@@ -210,61 +232,98 @@ DEALS_FILES = {
 }
 TOTAL_COST_FILE = "deals_total.csv"
 
+# ✅ Load & Transform "Total Cost of Deals" CSV
+@st.cache_data
+def load_total_cost_data():
+    if os.path.exists(TOTAL_COST_FILE):
+        try:
+            df = pd.read_csv(TOTAL_COST_FILE)
+            first_col = df.columns[0]
+            df = df.melt(id_vars=[first_col], var_name="Year", value_name="Total Cost")
+            df.rename(columns={first_col: "District"}, inplace=True)
+            df["Year"] = df["Year"].astype(int)
+            return df
+        except Exception as e:
+            st.error(f"⚠️ Error reading {TOTAL_COST_FILE}: {e}")
+            return None
+    else:
+        st.warning(f"⚠️ Missing file: {TOTAL_COST_FILE}")
+        return None
+
+# ✅ Load & Transform "Number of Deals" Data from Multiple CSV Files
 @st.cache_data
 def load_deals_data():
     dataframes = []
     for year, file in DEALS_FILES.items():
         if os.path.exists(file):
-            df = pd.read_csv(file)
-            df["Year"] = int(year)
-            dataframes.append(df)
+            try:
+                df = pd.read_csv(file)
+                df["Year"] = int(year)
+                dataframes.append(df)
+            except Exception as e:
+                st.error(f"⚠️ Error reading {file}: {e}")
         else:
             st.warning(f"⚠️ Missing file: {file}")
     return pd.concat(dataframes, ignore_index=True) if dataframes else None
 
-@st.cache_data
-def load_total_cost_data():
-    if not os.path.exists(TOTAL_COST_FILE):
-        st.warning(f"⚠️ Missing file: {TOTAL_COST_FILE}")
-        return None
-    try:
-        df = pd.read_csv(TOTAL_COST_FILE)
-        df = df.melt(id_vars=[df.columns[0]], var_name="Year", value_name="Total Cost")
-        df.rename(columns={df.columns[0]: "District"}, inplace=True)
-        df["Year"] = df["Year"].astype(int)
-        return df
-    except Exception as e:
-        st.error(f"⚠️ Error reading {TOTAL_COST_FILE}: {e}")
-        return None
-
+# ✅ Load Data
 df_deals = load_deals_data()
 df_cost = load_total_cost_data()
 
 if df_deals is not None and df_cost is not None:
-    valid_years = [y for y in sorted(df_deals["Year"].unique()) if y in [2022, 2023, 2024]]
-    selected_year = st.sidebar.selectbox("📅 اختر السنة", ["All"] + valid_years)
-    sort_by = st.sidebar.radio("📊 الترتيب حسب", ["Deal Count", "Total Cost"])
+   
 
-    df_deals_filtered = df_deals if selected_year == "All" else df_deals[df_deals["Year"] == int(selected_year)]
-    df_cost_filtered = df_cost if selected_year == "All" else df_cost[df_cost["Year"] == int(selected_year)]
+    # ✅ Sidebar Filters
+    valid_years = [year for year in sorted(df_deals["Year"].unique()) if year in [2022, 2023, 2024]]
+    selected_year = st.sidebar.selectbox("📅 Select Year", ["All"] + valid_years)
+    sort_by = st.sidebar.radio("📊 Sort By", ["Deal Count", "Total Cost"])
 
-    with col4:
-        st.subheader("📊 عدد الصفقات حسب الحي")
-        if "Deal Count" in df_deals_filtered.columns:
-            fig_deals = px.bar(
-                df_deals_filtered, x="District", y="Deal Count", color="Year",
-                category_orders={"District": df_deals_filtered.groupby("District")["Deal Count"].sum().sort_values(ascending=False).index}
-            )
-            st.plotly_chart(fig_deals)
+    # ✅ Filter Data Based on Selected Year
+    if selected_year != "All":
+        df_deals_filtered = df_deals[df_deals["Year"] == int(selected_year)]
+        df_cost_filtered = df_cost[df_cost["Year"] == int(selected_year)]
+    else:
+        df_deals_filtered = df_deals
+        df_cost_filtered = df_cost
 
-    with col5:
-        st.subheader("💰 التكلفة الكلية للصفقات")
-        if "Total Cost" in df_cost_filtered.columns:
-            fig_cost = px.bar(
-                df_cost_filtered, x="District", y="Total Cost", color="Year",
-                category_orders={"District": df_cost_filtered.groupby("District")["Total Cost"].sum().sort_values(ascending=False).index}
-            )
-            st.plotly_chart(fig_cost)
+   
+with col4:
+    st.subheader("📊 عدد الصفقات حسب الحي")
+    deals_per_district = df_deals_filtered.groupby(["District"])["Deal Count"].sum().reset_index()
+    
+    # ✅ Sort districts by total Deal Count in descending order
+    deals_per_district = deals_per_district.sort_values(by="Deal Count", ascending=False)
+    
+    fig_deals = px.bar(
+        df_deals_filtered, x="District", y="Deal Count", color="Year",
+        #barmode="group", title="Number of Deals per District per Year",
+        category_orders={"District": deals_per_district["District"].tolist()}  # Sorting reflected in plot
+    )
+    fig_deals.update_layout(coloraxis_colorbar=dict(tickvals=[2022, 2023, 2024], ticktext=["2022", "2023", "2024"]))  # ✅ Only show 2022, 2023, 2024
+    st.plotly_chart(fig_deals)
+
+   
+with col5:
+    st.subheader("💰 التكلفة الكلية للصفقات")
+
+    if df_cost_filtered is not None:
+        cost_per_district = df_cost_filtered.groupby(["District"])["Total Cost"].sum().reset_index()
+
+        # ✅ Sort districts by total Total Cost in descending order
+        cost_per_district = cost_per_district.sort_values(by="Total Cost", ascending=False)
+
+        fig_cost = px.bar(
+            df_cost_filtered, x="District", y="Total Cost", color="Year",
+            #barmode="stack", title="Total Cost of Deals per District per Year",
+            category_orders={"District": cost_per_district["District"].tolist()}  # Sorting reflected in plot
+        )
+        fig_cost.update_layout(coloraxis_colorbar=dict(tickvals=[2022, 2023, 2024], ticktext=["2022", "2023", "2024"]))  # ✅ Only show 2022, 2023, 2024
+        st.plotly_chart(fig_cost)
+    
+    else:
+        st.error("❌ Data files not found! Please ensure the files are correctly stored in the predefined locations.")
+
+
 
 # Footer
 st.markdown("---")

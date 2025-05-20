@@ -177,7 +177,7 @@ with col2:
 
 st.markdown("<h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>", unsafe_allow_html=True)
 
-FEATURE_IMPORTANCE_FILE = "feature_importance.csv"
+FEATURE_IMPORTANCE_FILE = "feature importance.csv"
 @st.cache_data
 def load_feature_importance_data():
     if not os.path.exists(FEATURE_IMPORTANCE_FILE):

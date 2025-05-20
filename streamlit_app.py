@@ -223,7 +223,7 @@ with col3:
         )
         fig_features.update_layout(
         margin=dict(l=100, r=20, t=40, b=40),  # ضبط الهوامش
-        yaxis=dict(tickfont=dict(size=14),   title=dict( text="الخاصية",standoff=60 ,font=dict(size=18)))),
+        yaxis=dict(tickfont=dict(size=14),   title=dict( text="الخاصية",standoff=40 ,font=dict(size=18)))),
         xaxis=dict(
         title=dict(
             text="تأثيرها على السعر",

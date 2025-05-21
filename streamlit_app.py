@@ -366,6 +366,54 @@ with col5:
     else:
         st.error("❌ Data files not found! Please ensure the files are correctly stored in the predefined locations.")
 
+with col5:
+    st.subheader("💰 التكلفة الكلية للصفقات")
+
+    if df_cost_filtered is not None:
+        # تجميع التكلفة حسب الحي
+        cost_per_district = df_cost_filtered.groupby(["District"])["Total Cost"].sum().reset_index()
+        cost_per_district = cost_per_district.sort_values(by="Total Cost", ascending=False)
+
+        # رسم المخطط
+        fig_cost = px.bar(
+            df_cost_filtered,
+            x="District",
+            y="Total Cost",
+            color="Year",
+            category_orders={"District": cost_per_district["District"].tolist()},
+            height=400  # تقليل الارتفاع لتناسق العرض
+        )
+
+        # تنسيق الرسم البياني
+        fig_cost.update_layout(
+            margin=dict(l=60, r=20, t=40, b=40),
+            xaxis=dict(
+                title=dict(
+                    text="الحي", standoff=70,
+                    font=dict(size=20)
+                ),
+                tickfont=dict(size=14)
+            ),
+            yaxis=dict(
+                title=dict(
+                    text="التكلفة الكلية",
+                    standoff=60,
+                    font=dict(size=20)
+                ),
+                tickfont=dict(size=14)
+            ),
+            coloraxis_colorbar=dict(
+                title="السنة",
+                tickvals=[2022, 2023, 2024],
+                ticktext=["2022", "2023", "2024"]
+            )
+        )
+
+        # عرض المخطط في Streamlit
+        st.plotly_chart(fig_cost, use_container_width=True)
+    
+    else:
+        st.error("❌ البيانات غير متوفرة. الرجاء التأكد من توفر الملفات في المسارات المحددة.")
 
 
 # Footer

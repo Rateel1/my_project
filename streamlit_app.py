@@ -308,7 +308,7 @@ with col4:
     deals_per_district = deals_per_district.sort_values(by="Deal Count", ascending=False)
     
     fig_deals = px.bar(
-        df_deals_filtered, x="District", y="Deal Count", color="Year",
+        df_deals_filtered, x="الحي", y="عدد الصفقات", color="Year",
         #barmode="group", title="Number of Deals per District per Year",
         category_orders={"District": deals_per_district["District"].tolist()}  # Sorting reflected in plot
     )

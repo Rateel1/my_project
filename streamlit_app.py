@@ -300,21 +300,51 @@ if df_deals is not None and df_cost is not None:
         df_cost_filtered = df_cost
 
    
+
 with col4:
     st.subheader("📊 عدد الصفقات حسب الحي")
+    
+    # تجميع عدد الصفقات حسب الحي
     deals_per_district = df_deals_filtered.groupby(["District"])["Deal Count"].sum().reset_index()
-    
-    # ✅ Sort districts by total Deal Count in descending order
     deals_per_district = deals_per_district.sort_values(by="Deal Count", ascending=False)
-    
-    fig_deals = px.bar(
-        df_deals_filtered, x="District", y="Deal Count", color="Year",
-        #barmode="group", title="Number of Deals per District per Year",
-        category_orders={"District": deals_per_district["District"].tolist()}  # Sorting reflected in plot
-    )
-    fig_deals.update_layout(coloraxis_colorbar=dict(tickvals=[2022, 2023, 2024], ticktext=["2022", "2023", "2024"]))  # ✅ Only show 2022, 2023, 2024
-    st.plotly_chart(fig_deals)
 
+    # رسم المخطط
+    fig_deals = px.bar(
+        df_deals_filtered,
+        x="District",
+        y="Deal Count",
+        color="Year",
+        category_orders={"District": deals_per_district["District"].tolist()},
+        height=400  # تقليل الارتفاع لتناسق العرض
+    )
+
+    # تنسيق الرسم البياني
+    fig_deals.update_layout(
+        margin=dict(l=60, r=20, t=40, b=40),
+        xaxis=dict(
+            title=dict(
+                text="الحي",  # ✅ عنوان المحور X بالعربية
+                font=dict(size=20)
+            ),
+            tickfont=dict(size=14)
+        ),
+        yaxis=dict(
+            title=dict(
+                text="عدد الصفقات",  # ✅ عنوان المحور Y بالعربية
+                standoff=60,
+                font=dict(size=20)
+            ),
+            tickfont=dict(size=14)
+        ),
+        coloraxis_colorbar=dict(
+            title="السنة",  # ✅ تعريب شريط الألوان
+            tickvals=[2022, 2023, 2024],
+            ticktext=["2022", "2023", "2024"]
+        )
+    )
+
+    # عرض المخطط في Streamlit
+    st.plotly_chart(fig_deals, use_container_width=True)
    
 with col5:
     st.subheader("💰 التكلفة الكلية للصفقات")

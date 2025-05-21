@@ -323,7 +323,7 @@ with col4:
         margin=dict(l=60, r=20, t=40, b=40),
         xaxis=dict(
             title=dict(
-                text="الحي",standoff=60,
+                text="الحي",standoff=70,
                 font=dict(size=20)
             ),
             tickfont=dict(size=14)

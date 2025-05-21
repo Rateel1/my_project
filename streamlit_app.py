@@ -14,6 +14,7 @@ import plotly.express as px
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
 
 # ✅ CSS لتنسيق العرض
+
 st.markdown(
     """
     <style>
@@ -21,20 +22,40 @@ st.markdown(
         direction: rtl;
         text-align: right;
     }
+
     h2, h3, h4, h5, h6 {
         text-align: right;
         font-size: 2rem !important;
     }
+
     section[data-testid="stSidebar"] {
         direction: rtl;
         text-align: right;
     }
+
+    /* تكبير عناصر النموذج */
     div[data-testid="stForm"] label,
     div[data-testid="stForm"] input,
     div[data-testid="stForm"] select,
     div[data-testid="stForm"] button,
     div[data-testid="stForm"] div[role="slider"] {
         font-size: 1.8rem !important;
+    }
+
+    /* تكبير محتوى selectbox خارج النموذج */
+    .stSelectbox div[data-baseweb="select"] > div {
+        font-size: 1.6rem !important;
+    }
+
+    /* تكبير النص داخل number_input */
+    .stNumberInput input {
+        font-size: 1.6rem !important;
+    }
+
+    /* تكبير عناوين selectbox و number_input */
+    label, .stSelectbox label, .stNumberInput label {
+        font-size: 1.8rem !important;
+        font-weight: bold;
     }
     </style>
     """,

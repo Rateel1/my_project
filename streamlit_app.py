@@ -346,25 +346,6 @@ with col4:
     # عرض المخطط في Streamlit
     st.plotly_chart(fig_deals, use_container_width=True)
    
-with col5:
-    st.subheader("💰 التكلفة الكلية للصفقات")
-
-    if df_cost_filtered is not None:
-        cost_per_district = df_cost_filtered.groupby(["District"])["Total Cost"].sum().reset_index()
-
-        # ✅ Sort districts by total Total Cost in descending order
-        cost_per_district = cost_per_district.sort_values(by="Total Cost", ascending=False)
-
-        fig_cost = px.bar(
-            df_cost_filtered, x="District", y="Total Cost", color="Year",
-            #barmode="stack", title="Total Cost of Deals per District per Year",
-            category_orders={"District": cost_per_district["District"].tolist()}  # Sorting reflected in plot
-        )
-        fig_cost.update_layout(coloraxis_colorbar=dict(tickvals=[2022, 2023, 2024], ticktext=["2022", "2023", "2024"]))  # ✅ Only show 2022, 2023, 2024
-        st.plotly_chart(fig_cost)
-    
-    else:
-        st.error("❌ Data files not found! Please ensure the files are correctly stored in the predefined locations.")
 
 with col5:
     st.subheader("💰 التكلفة الكلية للصفقات")

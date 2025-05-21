@@ -44,7 +44,7 @@ st.markdown(
 
     /* تكبير محتوى selectbox خارج النموذج */
     .stSelectbox div[data-baseweb="select"] > div {
-        font-size: 2rem !important;
+        font-size: 1.6rem !important;
     }
 
     /* تكبير النص داخل number_input */

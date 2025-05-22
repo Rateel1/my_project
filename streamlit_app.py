@@ -163,7 +163,7 @@ index=district_centers['district'].tolist().index(st.session_state['selected_dis
 
     st.session_state['selected_district'] = district
 
-        if st.form_submit_button("🔮 حساب القيمة التقديرية"):
+    if st.form_submit_button("🔮 حساب القيمة التقديرية"):
        with st.spinner('جاري الحساب...'):
            input_data = {
                     'beds': beds,

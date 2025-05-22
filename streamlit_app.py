@@ -13,8 +13,6 @@ import plotly.express as px
 # إعداد الصفحة
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
 
-# ✅ CSS لتنسيق العرض
-
 st.markdown(
     """
     <style>
@@ -25,7 +23,7 @@ st.markdown(
 
     h2, h3, h4, h5, h6 {
         text-align: right;
-        font-size: 1.6rem !important;
+        font-size: 2rem !important;
     }
 
     section[data-testid="stSidebar"] {
@@ -39,7 +37,7 @@ st.markdown(
     div[data-testid="stForm"] select,
     div[data-testid="stForm"] button,
     div[data-testid="stForm"] div[role="slider"] {
-        font-size: 1.6rem !important;
+        font-size: 1.8rem !important;
     }
 
     /* تكبير محتوى selectbox خارج النموذج */
@@ -54,13 +52,14 @@ st.markdown(
 
     /* تكبير عناوين selectbox و number_input */
     label, .stSelectbox label, .stNumberInput label {
-        font-size: 1.6rem !important;
-        
+        font-size: 1.8rem !important;
+        font-weight: bold;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 # تحميل النموذج
 @st.cache_resource
@@ -149,25 +148,7 @@ with col1:
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
 # --- نموذج الإدخال ---
-st.markdown("""
-    <style>
-    /* تكبير حجم عناوين selectbox و number_input */
-    label, .stSelectbox label, .stNumberInput label {
-        font-size: 20px !important;
-        font-weight: bold;
-    }
-    
-    /* تكبير حجم محتوى selectbox */
-    .stSelectbox div[data-baseweb="select"] > div {
-        font-size: 18px !important;
-    }
 
-    /* تكبير النص داخل number_input */
-    .stNumberInput input {
-        font-size: 18px !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 with col2:
     st.markdown("<h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>", unsafe_allow_html=True)

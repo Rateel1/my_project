@@ -162,15 +162,15 @@ with col2:
 
     if not st.session_state['location_manually_set']:
         row = district_centers[district_centers['district'] == district].iloc[0]
-            st.session_state['location_lat'] = row['location.lat']
-            st.session_state['location_lng'] = row['location.lng']
+        st.session_state['location_lat'] = row['location.lat']
+        st.session_state['location_lng'] = row['location.lng']
             
 
-        st.session_state['selected_district'] = district
+     st.session_state['selected_district'] = district
 
-        if st.form_submit_button("🔮 حساب القيمة التقديرية"):
-            with st.spinner('جاري الحساب...'):
-                input_data = {
+    if st.form_submit_button("🔮 حساب القيمة التقديرية"):
+        with st.spinner('جاري الحساب...'):
+            input_data = {
                     'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
                     'street_width': street_width, 'age': age, 'street_direction': street_direction,
                     'ketchen': ketchen, 'furnished': furnished,
@@ -178,9 +178,9 @@ with col2:
                     'location.lng': st.session_state['location_lng'],
                     'district': district
                 }
-                price = predict_price(input_data)
-                st.success("تمت عملية التوقع بنجاح!")
-                st.metric("السعر التقريبي", f"ريال {price:,.2f}")
+         price = predict_price(input_data)
+         st.success("تمت عملية التوقع بنجاح!")
+        st.metric("السعر التقريبي", f"ريال {price:,.2f}")
 
 
 

@@ -149,6 +149,26 @@ with col1:
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
 # --- نموذج الإدخال ---
+st.markdown("""
+    <style>
+    /* تكبير حجم عناوين selectbox و number_input */
+    label, .stSelectbox label, .stNumberInput label {
+        font-size: 20px !important;
+        font-weight: bold;
+    }
+    
+    /* تكبير حجم محتوى selectbox */
+    .stSelectbox div[data-baseweb="select"] > div {
+        font-size: 18px !important;
+    }
+
+    /* تكبير النص داخل number_input */
+    .stNumberInput input {
+        font-size: 18px !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 with col2:
     st.markdown("<h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>", unsafe_allow_html=True)
 

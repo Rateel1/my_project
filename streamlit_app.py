@@ -25,7 +25,7 @@ st.markdown(
 
     h2, h3, h4, h5, h6 {
         text-align: right;
-        font-size: 2rem !important;
+        font-size: 1.6rem !important;
     }
 
     section[data-testid="stSidebar"] {
@@ -39,7 +39,7 @@ st.markdown(
     div[data-testid="stForm"] select,
     div[data-testid="stForm"] button,
     div[data-testid="stForm"] div[role="slider"] {
-        font-size: 2rem !important;
+        font-size: 1.6rem !important;
     }
 
     /* تكبير محتوى selectbox خارج النموذج */
@@ -54,7 +54,7 @@ st.markdown(
 
     /* تكبير عناوين selectbox و number_input */
     label, .stSelectbox label, .stNumberInput label {
-        font-size: 2rem !important;
+        font-size: 1.6rem !important;
         
     }
     </style>

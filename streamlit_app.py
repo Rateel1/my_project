@@ -179,8 +179,8 @@ index=district_centers['district'].tolist().index(st.session_state['selected_dis
                     'location.lng': st.session_state['location_lng'],
                     'district': district
                 }
-                price = predict_price(input_data)
-                st.success("تمت عملية التوقع بنجاح!")
+            price = predict_price(input_data)
+            st.success("تمت عملية التوقع بنجاح!")
         st.metric("السعر التقريبي", f"ريال {price:,.2f}")
 
 

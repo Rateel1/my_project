@@ -47,7 +47,7 @@ st.markdown(
 
     /* تكبير النص داخل number_input */
     .stNumberInput input {
-        font-size: 1.6rem !important;
+        font-size: 1.4rem !important;
     }
 
     /* تكبير عناوين selectbox و number_input */

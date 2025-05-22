@@ -160,10 +160,11 @@ with col2:
     district = st.selectbox("اختر الحي 🏙️", district_centers['district'].unique().tolist(),
                                 index=district_centers['district'].tolist().index(st.session_state['selected_district']))
 
-        if not st.session_state['location_manually_set']:
-            row = district_centers[district_centers['district'] == district].iloc[0]
+    if not st.session_state['location_manually_set']:
+        row = district_centers[district_centers['district'] == district].iloc[0]
             st.session_state['location_lat'] = row['location.lat']
             st.session_state['location_lng'] = row['location.lng']
+            
 
         st.session_state['selected_district'] = district
 

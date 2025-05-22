@@ -1,4 +1,4 @@
-import streamlit as st 
+import streamlit as st
 import joblib
 import pandas as pd
 import numpy as np
@@ -129,42 +129,33 @@ with col2:
     with st.form("house_details_form"):
         col_a, col_b = st.columns(2)
         with col_a:
-            st.markdown("<label style='font-size:1.2rem;'>عدد غرف النوم 🛏️</label>", unsafe_allow_html=True)
-            beds = st.selectbox("", list(range(3, 8)))
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>عدد غرف المعيشة 🛋️</label>", unsafe_allow_html=True)
-            livings = st.selectbox("", list(range(1, 8)))
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>عدد دورات المياه 🚽</label>", unsafe_allow_html=True)
-            wc = st.selectbox("", list(range(2, 6)))
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>المساحة (متر مربع) 📏</label>", unsafe_allow_html=True)
-            area = st.number_input("", 150.0, 600.0, 150.0)
+            beds = st.selectbox("عدد غرف النوم 🛏️", list(range(3, 8)))
+            livings = st.selectbox("عدد غرف المعيشة 🛋️", list(range(1, 8)))
+            wc = st.selectbox("عدد دورات المياه 🚽", list(range(2, 6)))
+            area = st.number_input("المساحة (متر مربع) 📏", 150.0, 600.0, 150.0)
 
         with col_b:
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>عرض الشارع (متر) 🛣️</label>", unsafe_allow_html=True)
-            street_width = st.selectbox("", [10, 12, 15, 18, 20, 25])
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>عمر العقار 🗓️</label>", unsafe_allow_html=True)
-            age = st.selectbox("", list(range(0, 6)))
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>نوع الواجهة 🧭 🛣️</label>", unsafe_allow_html=True)
-            street_direction = st.selectbox("", [
+            street_width = st.selectbox("عرض الشارع (متر) 🛣️", [10, 12, 15, 18, 20, 25])
+            age = st.selectbox("عمر العقار 🗓️", list(range(0, 6)))
+            street_direction = st.selectbox("نوع الواجهة 🧭 🛣️", [
                 "واجهة شمالية", "واجهة شرقية", "واجهة غربية", "واجهة جنوبية",
                 "واجهة شمالية شرقية", "واجهة جنوبية شرقية", "واجهة جنوبية غربية", "واجهة شمالية غربية",
                 "الفلة تقع على ثلاثة شوارع", "الفلة تقع على أربعة شوارع"
             ])
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>المطبخ مجهز🍳؟ </label>", unsafe_allow_html=True)
-            ketchen = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا")
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>الفلة مؤثثة 🪑؟</label>", unsafe_allow_html=True)
-            furnished = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا")
-    district = st.selectbox("اختر الحي 🏙️", district_centers['district'].unique().tolist(),
-index=district_centers['district'].tolist().index(st.session_state['selected_district']))
+            ketchen = st.selectbox("المطبخ مجهز🍳؟", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا")
+            furnished = st.selectbox("الفلة مؤثثة 🪑؟", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا")
 
-    if not st.session_state['location_manually_set']:
+        district = st.selectbox("اختر الحي 🏙️", district_centers['district'].unique().tolist(),
+                                index=district_centers['district'].tolist().index(st.session_state['selected_district']))
+
+        if not st.session_state['location_manually_set']:
             row = district_centers[district_centers['district'] == district].iloc[0]
             st.session_state['location_lat'] = row['location.lat']
             st.session_state['location_lng'] = row['location.lng']
 
-    st.session_state['selected_district'] = district
+        st.session_state['selected_district'] = district
 
-   
-    if st.form_submit_button("🔮 حساب القيمة التقديرية"):
+        if st.form_submit_button("🔮 حساب القيمة التقديرية"):
             with st.spinner('جاري الحساب...'):
                 input_data = {
                     'beds': beds, 'livings': livings, 'wc': wc, 'area': area,

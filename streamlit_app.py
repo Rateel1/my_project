@@ -166,7 +166,7 @@ with col2:
         st.session_state['location_lng'] = row['location.lng']
             
 
-     st.session_state['selected_district'] = district
+      st.session_state['selected_district'] = district
 
     if st.form_submit_button("🔮 حساب القيمة التقديرية"):
         with st.spinner('جاري الحساب...'):

@@ -32,7 +32,7 @@ st.markdown(
     }
 
     /* تكبير عناصر النموذج */
-    div[data-testid="stForm"] label,
+    
     div[data-testid="stForm"] input,
     div[data-testid="stForm"] select,
     div[data-testid="stForm"] button,
@@ -50,11 +50,25 @@ st.markdown(
         font-size: 1.2rem !important;
     }
 
-    /* تكبير عناوين selectbox و number_input */
-    label, .stSelectbox label, .stNumberInput label {
-        font-size: 5rem !important;
-        font-weight: bold;
+    
     }
+    /* استهداف العناوين داخل النموذج */
+[data-testid="stForm"] label {
+    font-size: 4rem !important;
+    font-weight: bold !important;
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: right;
+}
+
+/* استهداف عناوين selectbox و number_input حتى خارج النماذج */
+div[data-testid="stSelectbox"] label,
+div[data-testid="stNumberInput"] label {
+    font-size: 1.5rem !important;
+    font-weight: bold !important;
+    text-align: right;
+}
+
     </style>
     """,
     unsafe_allow_html=True

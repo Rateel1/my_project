@@ -157,7 +157,7 @@ with col2:
             furnished = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا")
 
            
-        district = st.selectbox("اختر الحي 🏙️", district_centers['district'].unique().tolist(),
+    district = st.selectbox("اختر الحي 🏙️", district_centers['district'].unique().tolist(),
                                 index=district_centers['district'].tolist().index(st.session_state['selected_district']))
 
         if not st.session_state['location_manually_set']:

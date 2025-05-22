@@ -52,7 +52,7 @@ st.markdown(
 
     /* تكبير عناوين selectbox و number_input */
     label, .stSelectbox label, .stNumberInput label {
-        font-size: 2.4rem !important;
+        font-size: 5rem !important;
         font-weight: bold;
     }
     </style>

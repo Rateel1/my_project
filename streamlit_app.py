@@ -161,7 +161,7 @@ index=district_centers['district'].tolist().index(st.session_state['selected_dis
             st.session_state['location_lat'] = row['location.lat']
             st.session_state['location_lng'] = row['location.lng']
 
-        st.session_state['selected_district'] = district
+    st.session_state['selected_district'] = district
 
         if st.form_submit_button("🔮 حساب القيمة التقديرية"):
        with st.spinner('جاري الحساب...'):

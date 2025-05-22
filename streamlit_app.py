@@ -123,24 +123,8 @@ with col1:
 
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
+
 with col2:
-    st.markdown("<h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>", unsafe_allow_html=True)
-
-    with st.form("house_details_form"):
-        col_a, col_b = st.columns(2)
-        with col_a:
-            
-            st.markdown("<label style='font-size:1.8rem;'>عدد غرف النوم 🛏️</label>", unsafe_allow_html=True)
-            beds = st.selectbox("", list(range(3, 8)))
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>عدد غرف المعيشة 🛋️</label>", unsafe_allow_html=True)
-            livings = st.selectbox("", list(range(1, 8)))
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>عدد دورات المياه 🚽</label>", unsafe_allow_html=True)
-            wc = st.selectbox("", list(range(2, 6)))
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>المساحة (متر مربع) 📏</label>", unsafe_allow_html=True)
-            area = st.number_input("", 150.0, 600.0, 150.0)
-
-        with col_b:
-            with col2:
     st.markdown("<h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>", unsafe_allow_html=True)
 
     with st.form("house_details_form"):
@@ -196,6 +180,8 @@ with col2:
 
         
 
+
+           
 # --- الرؤى والتحليلات ---
 
 st.markdown("<h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>", unsafe_allow_html=True)

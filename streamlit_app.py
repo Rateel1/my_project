@@ -153,8 +153,8 @@ with col2:
             ketchen = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا")
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>الفلة مؤثثة 🪑؟</label>", unsafe_allow_html=True)
             furnished = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا")
-            district = st.selectbox("اختر الحي 🏙️", district_centers['district'].unique().tolist(),
-                                    index=district_centers['district'].tolist().index(st.session_state['selected_district']))
+    district = st.selectbox("اختر الحي 🏙️", district_centers['district'].unique().tolist(),
+index=district_centers['district'].tolist().index(st.session_state['selected_district']))
 
         if not st.session_state['location_manually_set']:
             row = district_centers[district_centers['district'] == district].iloc[0]
@@ -164,8 +164,8 @@ with col2:
         st.session_state['selected_district'] = district
 
         if st.form_submit_button("🔮 حساب القيمة التقديرية"):
-            with st.spinner('جاري الحساب...'):
-                input_data = {
+       with st.spinner('جاري الحساب...'):
+           input_data = {
                     'beds': beds,
                     'livings': livings,
                     'wc': wc,
@@ -181,7 +181,7 @@ with col2:
                 }
                 price = predict_price(input_data)
                 st.success("تمت عملية التوقع بنجاح!")
-                st.metric("السعر التقريبي", f"ريال {price:,.2f}")
+        st.metric("السعر التقريبي", f"ريال {price:,.2f}")
 
 
 

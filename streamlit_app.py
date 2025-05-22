@@ -130,7 +130,7 @@ with col2:
         col_a, col_b = st.columns(2)
         with col_a:
             
-            st.markdown("<label style='font-size:1.2rem;'>عدد غرف النوم 🛏️</label>", unsafe_allow_html=True)
+            st.markdown("<label style='font-size:1.8rem;'>عدد غرف النوم 🛏️</label>", unsafe_allow_html=True)
             beds = st.selectbox("", list(range(3, 8)))
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>عدد غرف المعيشة 🛋️</label>", unsafe_allow_html=True)
             livings = st.selectbox("", list(range(1, 8)))

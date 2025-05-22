@@ -224,24 +224,24 @@ with col3:
             x="تأثيرها على السعر",
             y="الخاصية",
             orientation="h",
-        
             color="تأثيرها على السعر",
-        height=400  # تقليل الارتفاع
+            height=400  # تقليل الارتفاع
         )
         fig_features.update_layout(
-        margin=dict(l=100, r=20, t=40, b=40),  # ضبط الهوامش
-        yaxis=dict(tickfont=dict(size=14),   title=dict( text="الخاصية",standoff=60 ,font=dict(size=20))),
-        xaxis=dict(
-        title=dict(
-            text="تأثيرها على السعر",
-            font=dict(size=20) 
+            margin=dict(l=100, r=20, t=40, b=40),  # ضبط الهوامش
+            yaxis=dict(
+                tickfont=dict(size=14),
+                title=dict(text="الخاصية", standoff=60, font=dict(size=20))
+            ),
+            xaxis=dict(
+                title=dict(text="تأثيرها على السعر", font=dict(size=20))
+            )
         )
-    ))
 
-    
-        st.plotly_chart(fig_features , use_container_width=True)
+        st.plotly_chart(fig_features, use_container_width=True)
     else:
         st.error("تحقق من أسماء الأعمدة: 'الخاصية' و 'تأثيرها على السعر' غير موجودة في df_features")
+
 
     
 # File paths for CSV files

@@ -92,6 +92,7 @@ st.session_state.setdefault('location_lng', float(riyadh_lng))
 st.session_state.setdefault('location_manually_set', False)
 st.session_state.setdefault('selected_district', district_centers.iloc[0]['district'])
 
+
 col1, col2 = st.columns([1, 2])
 
 with col1:
@@ -123,12 +124,12 @@ with col1:
 
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
-
 with col2:
     st.markdown("<h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>", unsafe_allow_html=True)
 
     with st.form("house_details_form"):
         col_a, col_b = st.columns(2)
+
         with col_a:
             st.markdown("<label style='font-size:1.8rem;'>عدد غرف النوم 🛏️</label>", unsafe_allow_html=True)
             beds = st.selectbox("", list(range(3, 8)))
@@ -164,7 +165,9 @@ with col2:
             st.session_state['location_lng'] = row['location.lng']
         st.session_state['selected_district'] = district
 
-        if st.form_submit_button("🔮 حساب القيمة التقديرية"):
+        # ✅ زر الإرسال داخل الفورم
+        submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
+        if submitted:
             with st.spinner('جاري الحساب...'):
                 input_data = {
                     'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
@@ -178,16 +181,11 @@ with col2:
                 st.success("تمت عملية التوقع بنجاح!")
                 st.metric("السعر التقريبي", f"ريال {price:,.2f}")
 
-        
-
-
-           
 # --- الرؤى والتحليلات ---
-
 st.markdown("<h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>", unsafe_allow_html=True)
 
 # --- 📊 Feature Importance Section ---
-FEATURE_IMPORTANCE_FILE = "feature importance.csv"  # Ensure file name matches your actual file
+FEATURE_IMPORTANCE_FILE = "feature importance.csv"  
 
 @st.cache_data
 def load_feature_importance_data():

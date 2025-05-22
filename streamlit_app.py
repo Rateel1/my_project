@@ -182,9 +182,9 @@ with col2:
         with col_b:
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>عرض الشارع (متر) 🛣️</label>", unsafe_allow_html=True)
             street_width = st.selectbox("", [10, 12, 15, 18, 20, 25])
-             st.markdown("<label style='font-size:1rem; font-weight:bold;'>عمر العقار 🗓️</label>", unsafe_allow_html=True)
+            st.markdown("<label style='font-size:1rem; font-weight:bold;'>عمر العقار 🗓️</label>", unsafe_allow_html=True)
             age = st.selectbox("", list(range(0, 6)))
-             st.markdown("<label style='font-size:1rem; font-weight:bold;'>نوع الواجهة 🧭 🛣️</label>", unsafe_allow_html=True)
+            st.markdown("<label style='font-size:1rem; font-weight:bold;'>نوع الواجهة 🧭 🛣️</label>", unsafe_allow_html=True)
             street_direction = st.selectbox("", [
                 "واجهة شمالية", "واجهة شرقية", "واجهة غربية", "واجهة جنوبية",
                 "واجهة شمالية شرقية", "واجهة جنوبية شرقية", "واجهة جنوبية غربية", "واجهة شمالية غربية",
@@ -192,7 +192,7 @@ with col2:
             ])
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>المطبخ مجهز 🍳</label>", unsafe_allow_html=True)
             ketchen = st.selectbox("[1,0],", format_func=lambda x: "نعم" if x == 1 else "لا")
-             st.markdown("<label style='font-size:1rem; font-weight:bold;'>الفلة مؤثثة 🪑؟</label>", unsafe_allow_html=True)
+            st.markdown("<label style='font-size:1rem; font-weight:bold;'>الفلة مؤثثة 🪑؟</label>", unsafe_allow_html=True)
             furnished = st.selectbox("[1,0],", format_func=lambda x: "نعم" if x == 1 else "لا")
 
         district = st.selectbox("اختر الحي 🏙️", district_centers['district'].unique().tolist(),

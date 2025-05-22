@@ -54,7 +54,7 @@ st.markdown(
     
     /* استهداف العناوين داخل النموذج */
 [data-testid="stForm"] label {
-    font-size: 4rem !important;
+    font-size: 1.2rem !important;
     font-weight: bold !important;
     display: block;
     margin-bottom: 0.5rem;

@@ -13,46 +13,32 @@ import plotly.express as px
 # إعداد الصفحة
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
 
-st.markdown(
-    """
-    <style>
-    html, body, [data-testid="stAppViewContainer"] {
-        direction: rtl;
-        text-align: right;
-    }
-
-    h2, h3, h4, h5, h6 {
-        text-align: right;
-        font-size: 2rem !important;
-    }
-
-    section[data-testid="stSidebar"] {
-        direction: rtl;
-        text-align: right;
-    }
-
-    /* تكبير عناصر النموذج */
-    
-    div[data-testid="stForm"] input,
-    div[data-testid="stForm"] select,
-    div[data-testid="stForm"] button,
-    div[data-testid="stForm"] div[role="slider"] {
-        font-size: 1.2rem !important;
-    }
-
-    /* تكبير محتوى selectbox خارج النموذج */
-    .stSelectbox div[data-baseweb="select"] > div {
-        font-size: 1.2rem !important;
-    }
-
-    /* تكبير النص داخل number_input */
-    .stNumberInput input {
-        font-size: 1.2rem !important;
-    }
-
-    
-    
-    /* استهداف العناوين داخل النموذج */
+st.markdown("""
+<style>
+html, body, [data-testid="stAppViewContainer"] {
+    direction: rtl;
+    text-align: right;
+}
+h2, h3, h4, h5, h6 {
+    text-align: right;
+    font-size: 2rem !important;
+}
+section[data-testid="stSidebar"] {
+    direction: rtl;
+    text-align: right;
+}
+div[data-testid="stForm"] input,
+div[data-testid="stForm"] select,
+div[data-testid="stForm"] button,
+div[data-testid="stForm"] div[role="slider"] {
+    font-size: 1.2rem !important;
+}
+.stSelectbox div[data-baseweb="select"] > div {
+    font-size: 1.2rem !important;
+}
+.stNumberInput input {
+    font-size: 1.2rem !important;
+}
 [data-testid="stForm"] label {
     font-size: 1.6rem !important;
     font-weight: bold !important;
@@ -60,22 +46,15 @@ st.markdown(
     margin-bottom: 0.5rem;
     text-align: right;
 }
-
-/* استهداف عناوين selectbox و number_input حتى خارج النماذج */
 div[data-testid="stSelectbox"] label,
 div[data-testid="stNumberInput"] label {
     font-size: 2rem !important;
     font-weight: bold !important;
     text-align: right;
 }
+</style>
+""", unsafe_allow_html=True)
 
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-
-# تحميل النموذج
 @st.cache_resource
 def load_model():
     return joblib.load("selected_xgb_modelafter.joblib")
@@ -87,7 +66,6 @@ def load_model_columns():
 model = load_model()
 model_columns = load_model_columns()
 
-# دالة التوقع
 def predict_price(new_record):
     new_record_df = pd.DataFrame([new_record])
     new_record_df = pd.get_dummies(new_record_df)
@@ -98,7 +76,6 @@ def predict_price(new_record):
     log_price = model.predict(new_record_df)[0]
     return np.expm1(log_price)
 
-# دالة لحساب المسافة
 def haversine_distance(lat1, lng1, lat2, lng2):
     R = 6371
     dlat = radians(lat2 - lat1)
@@ -107,21 +84,16 @@ def haversine_distance(lat1, lng1, lat2, lng2):
     c = 2 * atan2(sqrt(a), sqrt(1-a))
     return R * c
 
-# تحميل مواقع الأحياء
-district_centers = pd.read_excel("district_centers.xlsx")
-district_centers = district_centers.dropna(subset=['district'])
+district_centers = pd.read_excel("district_centers.xlsx").dropna(subset=['district'])
 
-# الحالة المبدئية
 riyadh_lat, riyadh_lng = 24.7136, 46.6753
 st.session_state.setdefault('location_lat', float(riyadh_lat))
 st.session_state.setdefault('location_lng', float(riyadh_lng))
 st.session_state.setdefault('location_manually_set', False)
 st.session_state.setdefault('selected_district', district_centers.iloc[0]['district'])
 
-# واجهة الموقع والتفاصيل
 col1, col2 = st.columns([1, 2])
 
-# --- اختيار الموقع ---
 with col1:
     st.markdown("<h1 style='font-size:2.4rem;'>📍 اختر الموقع</h1>", unsafe_allow_html=True)
 
@@ -131,18 +103,12 @@ with col1:
         st.session_state['location_lat'] = selected_row['location.lat']
         st.session_state['location_lng'] = selected_row['location.lng']
 
-    m = folium.Map(
-        location=[st.session_state['location_lat'], st.session_state['location_lng']],
-        zoom_start=12, tiles="CartoDB positron", control_scale=True
-    )
+    m = folium.Map(location=[st.session_state['location_lat'], st.session_state['location_lng']], zoom_start=12, tiles="CartoDB positron", control_scale=True)
     m.add_child(MeasureControl(primary_length_unit='kilometers'))
     m.add_child(MousePosition(position='bottomright'))
 
-    marker = folium.Marker(
-        location=[st.session_state['location_lat'], st.session_state['location_lng']],
-        draggable=True,
-        icon=folium.Icon(color="red", icon="map-marker")
-    )
+    marker = folium.Marker(location=[st.session_state['location_lat'], st.session_state['location_lng']],
+                           draggable=True, icon=folium.Icon(color="red", icon="map-marker"))
     marker.add_to(m)
 
     map_data = st_folium(m, width=700, height=450)
@@ -150,19 +116,12 @@ with col1:
         st.session_state['location_lat'] = map_data['last_clicked']['lat']
         st.session_state['location_lng'] = map_data['last_clicked']['lng']
         st.session_state['location_manually_set'] = True
-
         distances = district_centers.apply(
-            lambda row: haversine_distance(
-                st.session_state['location_lat'], st.session_state['location_lng'],
-                row['location.lat'], row['location.lng']
-            ), axis=1
-        )
+            lambda row: haversine_distance(st.session_state['location_lat'], st.session_state['location_lng'],
+                                           row['location.lat'], row['location.lng']), axis=1)
         st.session_state['selected_district'] = district_centers.loc[distances.idxmin(), 'district']
 
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
-
-# --- نموذج الإدخال ---
-
 
 with col2:
     st.markdown("<h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>", unsafe_allow_html=True)
@@ -194,11 +153,8 @@ with col2:
             ketchen = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا")
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>الفلة مؤثثة 🪑؟</label>", unsafe_allow_html=True)
             furnished = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا")
-            
             district = st.selectbox("اختر الحي 🏙️", district_centers['district'].unique().tolist(),
-            index=district_centers['district'].tolist().index(st.session_state['selected_district']))
-
-            
+                                    index=district_centers['district'].tolist().index(st.session_state['selected_district']))
 
         if not st.session_state['location_manually_set']:
             row = district_centers[district_centers['district'] == district].iloc[0]
@@ -226,6 +182,7 @@ with col2:
                 price = predict_price(input_data)
                 st.success("تمت عملية التوقع بنجاح!")
                 st.metric("السعر التقريبي", f"ريال {price:,.2f}")
+
 
 
 # --- الرؤى والتحليلات ---

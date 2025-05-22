@@ -140,7 +140,7 @@ with col2:
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>المساحة (متر مربع) 📏</label>", unsafe_allow_html=True)
             area = st.number_input("", 150.0, 600.0, 150.0, key="area")
             st.markdown("<label style='font-size:1.8rem;'>اختر الحي 🏙️</label>", unsafe_allow_html=True)
-             district = st.selectbox("", district_centers['district'].unique().tolist(),
+            district = st.selectbox("", district_centers['district'].unique().tolist(),
                                 index=district_centers['district'].tolist().index(st.session_state['selected_district']),
                                 key="district")
 

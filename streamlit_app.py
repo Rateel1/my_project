@@ -172,7 +172,8 @@ with col2:
         with col_a:
             st.markdown("<label style='font-size:1.4rem; font-weight:bold;'>عدد غرف النوم 🛏️</label>", unsafe_allow_html=True)
             beds = st.selectbox("", list(range(3, 8)))
-            livings = st.selectbox("عدد غرف المعيشة 🛋️", list(range(1, 8)))
+            st.markdown("<label style='font-size:1.4rem; font-weight:bold;'>عدد غرف المعيشة 🛋️</label>", unsafe_allow_html=True)
+            livings = st.selectbox("", list(range(1, 8)))
             wc = st.selectbox("عدد دورات المياه 🚽", list(range(2, 6)))
             area = st.number_input("المساحة (متر مربع) 📏", 150.0, 600.0, 150.0)
 

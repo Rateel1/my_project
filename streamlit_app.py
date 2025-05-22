@@ -64,7 +64,7 @@ st.markdown(
 /* استهداف عناوين selectbox و number_input حتى خارج النماذج */
 div[data-testid="stSelectbox"] label,
 div[data-testid="stNumberInput"] label {
-    font-size: 1.5rem !important;
+    font-size: 4rem !important;
     font-weight: bold !important;
     text-align: right;
 }

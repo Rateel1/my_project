@@ -37,14 +37,11 @@ div[data-testid="stForm"] div[role="slider"] {
 /* Main select control */
 div[data-baseweb="select"] {
     font-size: 1.6rem !important;
-    
-    
-}
-div[data-baseweb="select"] > div {
-    padding-top: 30px !important;
+     padding-top: 30px !important;
     padding-bottom: 30px !important;
-    font-size: 1.6rem !important;
+    
 }
+
 
 
 .stNumberInput input {

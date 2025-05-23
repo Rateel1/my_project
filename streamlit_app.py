@@ -74,8 +74,8 @@ div[data-baseweb="select"] div[role="combobox"] {
 div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
-/* Style the submit button container */
-div.stForm button {
+/* استهداف الزر داخل النموذج */
+div[data-testid="stForm"] button {
     width: 100% !important;
     height: 70px !important;
     background-color: #1f77b4 !important;
@@ -87,8 +87,8 @@ div.stForm button {
     align-items: center !important;
 }
 
-/* Force font size inside button span */
-div.stForm button > div[data-testid="baseButton"] > span {
+/* استهداف النص داخل الزر */
+div[data-testid="stForm"] button span {
     font-size: 2rem !important;
     font-weight: bold !important;
     line-height: 2.6rem !important;

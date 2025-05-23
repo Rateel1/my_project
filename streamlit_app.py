@@ -36,12 +36,12 @@ div[data-testid="stForm"] div[role="slider"] {
 }
 /* Main select container */
 div[data-baseweb="select"] {
-    min-height: 60px !important;
+    min-height: 70px !important;
 }
 
 /* Inner value display and control area */
 div[data-baseweb="select"] > div {
-    min-height: 80px !important;
+    min-height: 70px !important;
     display: flex;
     align-items: center !important; /* vertical centering */
 }

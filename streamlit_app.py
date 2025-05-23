@@ -34,12 +34,18 @@ div[data-testid="stForm"] div[role="slider"] {
     font-size: 1.8rem !important;
    
 }
+/* Main select control */
 div[data-baseweb="select"] {
-   
-     font-size: 1.6rem !important;
-   
+    font-size: 1.6rem !important;
+    min-width: fit-content !important;
     width: auto !important;
-    
+    max-width: 100% !important;
+}
+
+/* Dropdown popup menu */
+div[data-baseweb="popover"] {
+    width: fit-content !important;
+    min-width: 300px !important; /* Optional: control minimum dropdown width */
 }
 
 .stNumberInput input {

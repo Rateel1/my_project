@@ -186,12 +186,15 @@ with col2:
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>الفلة مؤثثة 🪑؟</label>", unsafe_allow_html=True)
             furnished = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا", key="furnished")
 
-        if not st.session_state['location_manually_set']:
-            row = district_centers[district_centers['district'] == district].iloc[0]
-            st.session_state['location_lat'] = row['location.lat']
-            st.session_state['location_lng'] = row['location.lng']
-        st.session_state['selected_district'] = district
-       
+        with st.form("house_details_form"):
+    col_a, col_b = st.columns(2)
+    # your input widgets go here ...
+
+    if not st.session_state['location_manually_set']:
+        row = district_centers[district_centers['district'] == district].iloc[0]
+        st.session_state['location_lat'] = row['location.lat']
+        st.session_state['location_lng'] = row['location.lng']
+    st.session_state['selected_district'] = district
 
     # Inject CSS for this specific button
     st.markdown("""
@@ -229,9 +232,7 @@ with col2:
             price = predict_price(input_data)
             st.success("تمت عملية التوقع بنجاح!")
             st.metric("السعر التقريبي", f"ريال {price:,.2f}")
-
-        
-    
+  
 # --- الرؤى والتحليلات ---
 st.markdown("<h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>", unsafe_allow_html=True)
 

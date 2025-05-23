@@ -41,7 +41,10 @@ div[data-baseweb="select"] {
     
 }
 
-
+div[data-baseweb="select"] > div {
+    padding-top: 35px !important;
+    padding-bottom: 35px !important;
+}
 
 .stNumberInput input {
     font-size: 1.6rem !important;

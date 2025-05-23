@@ -74,23 +74,20 @@ div[data-baseweb="select"] div[role="combobox"] {
 div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
-
-</style>
-""", unsafe_allow_html=True)
-# Inject custom CSS
-st.markdown("""
-<style>
-/* Style for form_submit_button */
-div.stButton > button[kind="primary"] {
-    width: 100% !important;           /* Full-width button */
-    height: 70px !important;          /* Increase button height */
-    font-size: 2rem !important;       /* Larger text */
-    font-weight: bold !important;     
-    padding: 1rem 2rem !important;    /* Padding inside button */
-    border-radius: 10px !important;   /* Optional: rounded corners */
+/* Make all form buttons bigger */
+button[type="submit"] {
+    width: 100% !important;            /* Full width */
+    height: 70px !important;           /* Height */
+    font-size: 2rem !important;        /* Font size */
+    font-weight: bold !important;      /* Bold text */
+    padding: 1rem 2rem !important;     /* Padding */
+    border-radius: 10px !important;    /* Rounded corners */
+    background-color: #4CAF50 !important; /* Optional: green color */
+    color: white !important;           /* Text color */
 }
 </style>
 """, unsafe_allow_html=True)
+
 @st.cache_resource
 def load_model():
     return joblib.load("selected_xgb_modelafter.joblib")

@@ -37,12 +37,12 @@ div[data-testid="stForm"] div[role="slider"] {
 /* Main select control */
 div[data-baseweb="select"] {
     font-size: 1.6rem !important;
-    min-height: 60px !important;
+    
     
 }
 div[data-baseweb="select"] > div {
-    padding-top: 60px !important;
-    padding-bottom: 60px !important;
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
 }
 
 

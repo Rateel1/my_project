@@ -48,7 +48,7 @@ div[data-baseweb="select"] > div {
 
 /* Text inside select */
 div[data-baseweb="select"] span {
-    font-size: 1.6rem !important;
+    font-size: 1.8rem !important;
     line-height: 2.4rem !important;
 }
 

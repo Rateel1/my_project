@@ -35,7 +35,7 @@ div[data-testid="stForm"] div[role="slider"] {
 }
 .stSelectbox div[data-baseweb="select"] > div {
     font-size: 1.6rem !important;
-     width: 600px!important;
+     width: 100%!important;
 }
 .stNumberInput input {
     font-size: 1.6rem !important;

@@ -43,6 +43,7 @@ div[data-baseweb="select"] {
 div[data-baseweb="select"] > div {
     padding-top: 30px !important;
     padding-bottom: 30px !important;
+    font-size: 1.6rem !important;
 }
 
 

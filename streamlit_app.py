@@ -38,6 +38,8 @@ div[data-testid="stForm"] div[role="slider"] {
 div[data-baseweb="select"] {
     font-size: 1.6rem !important;
     min-height: 60px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
 }
 
 

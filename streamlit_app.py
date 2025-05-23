@@ -52,6 +52,7 @@ div[data-testid="stNumberInput"] label {
     font-size: 2rem !important;
     font-weight: bold !important;
     text-align: right;
+     width: 100%!important;
 }
 
 </style>

@@ -74,16 +74,15 @@ div[data-baseweb="select"] div[role="combobox"] {
 div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
-/* Make all form buttons bigger */
-button[type="submit"] {
-    width: 100% !important;            /* Full width */
-    height: 70px !important;           /* Height */
-    font-size: 2rem !important;        /* Font size */
-    font-weight: bold !important;      /* Bold text */
-    padding: 1rem 2rem !important;     /* Padding */
-    border-radius: 10px !important;    /* Rounded corners */
-    background-color: #4CAF50 !important; /* Optional: green color */
-    color: white !important;           /* Text color */
+/* Resize form_submit_button */
+div.stForm button {
+    width: 100% !important;         /* Make button full width */
+    height: 70px !important;        /* Increase height */
+    font-size: 2rem !important;     /* Enlarge font */
+    font-weight: bold !important;
+    border-radius: 10px !important; /* Rounded corners */
+    background-color: #1f77b4 !important;  /* Optional background */
+    color: white !important;        /* Optional text color */
 }
 </style>
 """, unsafe_allow_html=True)

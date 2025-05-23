@@ -78,7 +78,7 @@ div[data-baseweb="menu"] div[role="option"] {
 div.stForm button {
     width: 100% !important;         /* Make button full width */
     height: 70px !important;        /* Increase height */
-    font-size: 8rem !important;     /* Enlarge font */
+    font-size: 10rem !important;     /* Enlarge font */
     font-weight: bold !important;
     border-radius: 10px !important; /* Rounded corners */
     background-color: #1f77b4 !important;  /* Optional background */

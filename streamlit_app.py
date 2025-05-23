@@ -74,7 +74,15 @@ div[data-baseweb="select"] div[role="combobox"] {
 div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
-
+/* Style for form_submit_button */
+div.stButton > button[kind="primary"] {
+    width: 100% !important;           /* Full-width button */
+    height: 70px !important;          /* Increase button height */
+    font-size: 2.6rem !important;       /* Larger text */
+    font-weight: bold !important;     
+    padding: 1rem 2rem !important;    /* Padding inside button */
+    border-radius: 10px !important;   /* Optional: rounded corners */
+}
 </style>
 """, unsafe_allow_html=True)
 

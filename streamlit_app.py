@@ -28,7 +28,7 @@ section[data-testid="stSidebar"] {
     text-align: right;
 }
 div[data-testid="stForm"] input,
-div[data-testid="stForm"] select,
+# div[data-testid="stForm"] select,
 div[data-testid="stForm"] button,
 div[data-testid="stForm"] div[role="slider"] {
     font-size: 1.8rem !important;
@@ -53,7 +53,7 @@ div[data-testid="stNumberInput"] label {
     font-size: 2rem !important;
     font-weight: bold !important;
     text-align: right;
-       width: 100%!important;
+      
 }
 
 </style>

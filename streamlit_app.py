@@ -41,7 +41,7 @@ div[data-baseweb="select"] {
 
 /* Inner value display and control area */
 div[data-baseweb="select"] > div {
-    min-height: 60px !important;
+    min-height: 80px !important;
     display: flex;
     align-items: center !important; /* vertical centering */
 }

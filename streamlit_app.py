@@ -42,8 +42,8 @@ div[data-baseweb="select"] {
 }
 
 div[data-baseweb="select"] > div {
-    padding-top: 15px !important;
-    padding-bottom: 15px !important;
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
 }
 
 .stNumberInput input {

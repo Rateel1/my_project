@@ -70,6 +70,28 @@ div[data-testid="stNumberInput"] label {
     text-align: right;
       
 }
+/* Selectbox height */
+div[data-baseweb="select"] {
+    min-height: 70px !important;
+}
+
+/* Selected value area (visible text when closed) */
+div[data-baseweb="select"] > div {
+    min-height: 70px !important;
+    display: flex;
+    align-items: center !important;
+    font-size: 2rem !important;
+}
+
+/* Fix font size for selected item text */
+div[data-baseweb="select"] div[role="combobox"] {
+    font-size: 2rem !important;
+}
+
+/* Font size for dropdown menu options */
+div[data-baseweb="menu"] div[role="option"] {
+    font-size: 2rem !important;
+}
 
 </style>
 """, unsafe_allow_html=True)

@@ -191,6 +191,7 @@ with col2:
             st.session_state['location_lat'] = row['location.lat']
             st.session_state['location_lng'] = row['location.lng']
         st.session_state['selected_district'] = district
+  
         st.markdown("""
 <style>
 /* Scoped to this container only */
@@ -211,7 +212,6 @@ div.special-button-container button span {
 
 # Wrap with custom class using unsafe HTML
 st.markdown('<div class="special-button-container">', unsafe_allow_html=True)
-
 
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
         if submitted:

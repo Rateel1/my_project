@@ -34,24 +34,6 @@ div[data-testid="stForm"] div[role="slider"] {
     font-size: 1.8rem !important;
    
 }
-/* Main select container */
-div[data-baseweb="select"] {
-    min-height: 70px !important;
-}
-
-/* Inner value display and control area */
-div[data-baseweb="select"] > div {
-    min-height: 70px !important;
-    display: flex;
-    align-items: center !important; /* vertical centering */
-}
-
-/* Correctly target the selected text container */
-div[data-baseweb="select"] div[role="option"],
-div[data-baseweb="select"] div[role="button"] {
-    font-size: 2rem !important;
-    line-height: 2.6rem !important;
-}
 
 .stNumberInput input {
     font-size: 1.6rem !important;

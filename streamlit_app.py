@@ -84,11 +84,7 @@ div.stForm button {
     background-color: #1f77b4 !important;  /* Optional background */
     color: white !important;        /* Optional text color */
 }
-/* Target the inner span inside the form submit button */
-div.stForm button span {
-    font-size: 2rem !important;
-    line-height: 2.6rem !important;
-}
+
 
 </style>
 """, unsafe_allow_html=True)

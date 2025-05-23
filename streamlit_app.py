@@ -34,19 +34,23 @@ div[data-testid="stForm"] div[role="slider"] {
     font-size: 1.8rem !important;
    
 }
-<style>
-/* Make the select box taller */
+/* Main select container */
 div[data-baseweb="select"] {
-    font-size: 1.6rem !important;
     min-height: 60px !important;
 }
 
-/* Optional: center the text vertically */
+/* Inner value display and control area */
 div[data-baseweb="select"] > div {
-    padding-top: 12px !important;
-    padding-bottom: 12px !important;
+    min-height: 60px !important;
+    display: flex;
+    align-items: center !important; /* vertical centering */
 }
 
+/* Text inside select */
+div[data-baseweb="select"] span {
+    font-size: 1.6rem !important;
+    line-height: 2.4rem !important;
+}
 
 .stNumberInput input {
     font-size: 1.6rem !important;

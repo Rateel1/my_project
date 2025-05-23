@@ -23,6 +23,27 @@ h2, h3, h4, h5, h6 {
     text-align: right;
     font-size: 2rem !important;
 }
+/* استهداف الزر داخل النموذج */
+div[data-testid="stForm"] button {
+    width: 100% !important;
+    height: 70px !important;
+    background-color: #1f77b4 !important;
+    color: white !important;
+    border-radius: 10px !important;
+    padding: 1rem 2rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* استهداف النص داخل الزر */
+div[data-testid="stForm"] button span {
+    font-size: 2rem !important;
+    font-weight: bold !important;
+    line-height: 2.6rem !important;
+}
+
+
 section[data-testid="stSidebar"] {
     direction: rtl;
     text-align: right;

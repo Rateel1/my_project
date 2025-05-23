@@ -136,15 +136,15 @@ with col2:
             st.markdown("<label style='font-size:1.8rem;'>عدد غرف النوم 🛏️</label>", unsafe_allow_html=True)
             beds = st.selectbox("", list(range(3, 8)), key="beds", container_width=True)
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>عدد غرف المعيشة 🛋️</label>", unsafe_allow_html=True)
-            livings = st.selectbox("", list(range(1, 8)), key="livings")
+            livings = st.selectbox("", list(range(1, 8)), key="livings", container_width=True)
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>عدد دورات المياه 🚽</label>", unsafe_allow_html=True)
-            wc = st.selectbox("", list(range(2, 6)), key="wc")
+            wc = st.selectbox("", list(range(2, 6)), key="wc", container_width=True)
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>المساحة (متر مربع) 📏</label>", unsafe_allow_html=True)
-            area = st.number_input("", 150.0, 600.0, 150.0, key="area")
+            area = st.number_input("", 150.0, 600.0, 150.0, key="area",container_width=True)
             st.markdown("<label style='font-size:1.8rem;'>اختر الحي 🏙️</label>", unsafe_allow_html=True)
             district = st.selectbox("", district_centers['district'].unique().tolist(),
                                 index=district_centers['district'].tolist().index(st.session_state['selected_district']),
-                                key="district")
+                                key="district",container_width=True)
 
        
 

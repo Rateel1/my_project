@@ -34,12 +34,17 @@ div[data-testid="stForm"] div[role="slider"] {
     font-size: 1.8rem !important;
    
 }
-/* Main select control */
+<style>
+/* Make the select box taller */
 div[data-baseweb="select"] {
     font-size: 1.6rem !important;
-     padding-top: 30px !important;
-    padding-bottom: 30px !important;
-    
+    min-height: 60px !important;
+}
+
+/* Optional: center the text vertically */
+div[data-baseweb="select"] > div {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
 }
 
 

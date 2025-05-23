@@ -46,10 +46,11 @@ div[data-baseweb="select"] > div {
     align-items: center !important; /* vertical centering */
 }
 
-/* Text inside select */
-div[data-baseweb="select"] span {
+/* Correctly target the selected text container */
+div[data-baseweb="select"] div[role="option"],
+div[data-baseweb="select"] div[role="button"] {
     font-size: 2rem !important;
-    line-height: 2.4rem !important;
+    line-height: 2.6rem !important;
 }
 
 .stNumberInput input {

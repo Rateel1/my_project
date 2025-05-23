@@ -35,8 +35,11 @@ div[data-testid="stForm"] div[role="slider"] {
    
 }
 div[data-baseweb="select"] {
-    font-size: 1.6rem !important;
-    width: 100% !important; /* or 100% if you prefer full width */
+   
+     font-size: 1.6rem !important;
+    min-width: fit-content !important;
+    width: auto !important;
+    max-width: 100% !important;
 }
 
 .stNumberInput input {

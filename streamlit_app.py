@@ -48,7 +48,7 @@ div[data-baseweb="select"] > div {
 
 /* Text inside select */
 div[data-baseweb="select"] span {
-    font-size: 1.8rem !important;
+    font-size: 2rem !important;
     line-height: 2.4rem !important;
 }
 
@@ -56,7 +56,7 @@ div[data-baseweb="select"] span {
     font-size: 1.6rem !important;
 }
 [data-testid="stForm"] label {
-    font-size: 2rem !important;
+    font-size: 1.6rem !important;
     font-weight: bold !important;
     display: block;
     

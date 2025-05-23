@@ -191,24 +191,47 @@ with col2:
             st.session_state['location_lat'] = row['location.lat']
             st.session_state['location_lng'] = row['location.lng']
         st.session_state['selected_district'] = district
-  
-        submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
-        if submitted:
-            with st.spinner('جاري الحساب...'):
-                input_data = {
-                    'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
-                    'street_width': street_width, 'age': age, 'street_direction': street_direction,
-                    'ketchen': ketchen, 'furnished': furnished,
-                    'location.lat': st.session_state['location_lat'],
-                    'location.lng': st.session_state['location_lng'],
-                    'district': district
-                }
-                price = predict_price(input_data)
-                st.success("تمت عملية التوقع بنجاح!")
-                st.metric("السعر التقريبي", f"ريال {price:,.2f}")
+       
 
+    # Inject CSS for this specific button
+    st.markdown("""
+    <style>
+    div.special-button-container button {
+        width: 100% !important;
+        height: 70px !important;
+        background-color: #1f77b4 !important;
+        color: white !important;
+        font-size: 2rem !important;
+        font-weight: bold !important;
+        border-radius: 12px !important;
+    }
+    div.special-button-container button span {
+        font-size: 2rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Scoped style wrapper
+    st.markdown('<div class="special-button-container">', unsafe_allow_html=True)
+    submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    if submitted:
+        with st.spinner('جاري الحساب...'):
+            input_data = {
+                'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
+                'street_width': street_width, 'age': age, 'street_direction': street_direction,
+                'ketchen': ketchen, 'furnished': furnished,
+                'location.lat': st.session_state['location_lat'],
+                'location.lng': st.session_state['location_lng'],
+                'district': district
+            }
+            price = predict_price(input_data)
+            st.success("تمت عملية التوقع بنجاح!")
+            st.metric("السعر التقريبي", f"ريال {price:,.2f}")
+
+        
     
-
 # --- الرؤى والتحليلات ---
 st.markdown("<h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>", unsafe_allow_html=True)
 

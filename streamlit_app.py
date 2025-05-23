@@ -184,7 +184,7 @@ with col2:
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>المطبخ مجهز🍳؟ </label>", unsafe_allow_html=True)
             ketchen = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا", key="ketchen")
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>الفلة مؤثثة 🪑؟</label>", unsafe_allow_html=True)
-                        furnished = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا", key="furnished")
+            furnished = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا", key="furnished")
 
         if not st.session_state['location_manually_set']:
             row = district_centers[district_centers['district'] == district].iloc[0]

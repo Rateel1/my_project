@@ -41,8 +41,8 @@ div[data-baseweb="select"] {
     
 }
 div[data-baseweb="select"] > div {
-    padding-top: 12px !important;
-    padding-bottom: 12px !important;
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
 }
 
 

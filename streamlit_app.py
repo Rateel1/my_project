@@ -39,7 +39,7 @@ div[data-testid="stForm"] div[role="slider"] {
     font-size: 1.6rem !important;
 }
 [data-testid="stForm"] label {
-    font-size: 1.6rem !important;
+    font-size: 1.8rem !important;
     font-weight: bold !important;
     display: block;
     

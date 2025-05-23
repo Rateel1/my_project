@@ -52,6 +52,9 @@ div[data-testid="stNumberInput"] label {
     font-weight: bold !important;
     text-align: right;
 }
+div[data-baseweb="select"] {
+        width: 100% !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 

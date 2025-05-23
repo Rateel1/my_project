@@ -43,7 +43,7 @@ div[data-testid="stForm"] div[role="slider"] {
     font-size: 1.6rem !important;
     font-weight: bold !important;
     display: block;
-    margin-bottom: 0.5rem;
+    
     text-align: right;
 }
 div[data-testid="stSelectbox"] label,

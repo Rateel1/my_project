@@ -75,7 +75,17 @@ div[data-baseweb="select"] div[role="combobox"] {
 div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
-
+/* Style only the form_submit_button with specific Arabic label */
+button[aria-label="🔮 حساب القيمة التقديرية"] {
+    font-size: 2.4rem !important;
+    font-weight: bold !important;
+    color: white !important;
+    background-color: #4CAF50 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 0.4em 1.2em !important;
+    cursor: pointer;
+}
 </style>
 """, unsafe_allow_html=True)
 

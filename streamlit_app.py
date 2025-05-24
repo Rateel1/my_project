@@ -151,14 +151,12 @@ with col1:
 with col2:
     st.markdown("""
 <style>
-/* Style only the form_submit_button with specific Arabic label */
-button[aria-label="🔮 حساب القيمة التقديرية"] {
+div.stButton > button[aria-label="🔮 حساب القيمة التقديرية"] {
     font-size: 2.4rem !important;
     font-weight: bold !important;
-    color: white !important;
     background-color: #4CAF50 !important;
-    border: none !important;
-    border-radius: 10px !important;
+    color: white !important;
+    border-radius: 8px !important;
     padding: 0.4em 1.2em !important;
     cursor: pointer;
 }

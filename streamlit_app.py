@@ -21,7 +21,7 @@ html, body, [data-testid="stAppViewContainer"] {
     text-align: right;
 }
 
-h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 ,div.stForm button{
     text-align: right;
     font-size: 2rem !important;
 }
@@ -45,7 +45,7 @@ section[data-testid="stSidebar"] {
     text-align: right;
 }
 div[data-testid="stSelectbox"] label,
-div[data-testid="stNumberInput"] label,div.stForm button {
+div[data-testid="stNumberInput"] label {
     font-size: 2rem !important;
     font-weight: bold !important;
     text-align: right;

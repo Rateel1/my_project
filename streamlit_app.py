@@ -29,7 +29,9 @@ section[data-testid="stSidebar"] {
     text-align: right;
 }
 
-
+.stNumberInput input {
+    font-size: 1.6rem !important;
+}
 
 
 
@@ -57,7 +59,7 @@ div[data-baseweb="select"] > div {
     min-height: 70px !important;
     display: flex;
     align-items: center !important;
-    font-size: 1.8rem !important;
+    font-size: 2.4rem !important;
 }
 
 /* Fix font size for selected item text */

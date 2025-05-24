@@ -71,7 +71,7 @@ div[data-baseweb="select"] div[role="combobox"] {
 
 /* Font size for dropdown menu options */
 div[data-baseweb="menu"] div[role="option"] {
-    font-size: 1.8rem !important;
+    font-size: 2rem !important;
 }
 
 

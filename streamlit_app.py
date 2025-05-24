@@ -12,7 +12,19 @@ import plotly.express as px
 
 # إعداد الصفحة
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
-
+st.markdown("""
+<style>
+div.stForm button {
+    font-size: 2.4rem !important;
+    font-weight: bold !important;
+    background-color: #4CAF50 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 0.4em 1.2em !important;
+    cursor: pointer;
+}
+</style>
+""", unsafe_allow_html=True)
 st.markdown("""
 <style>
 
@@ -21,7 +33,7 @@ html, body, [data-testid="stAppViewContainer"] {
     text-align: right;
 }
 
-h2, h3, h4, h5, h6 ,div.stForm button{
+h2, h3, h4, h5, h6 {
     text-align: right;
     font-size: 2rem !important;
 }

@@ -76,11 +76,7 @@ div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
 
-</style>
-""", unsafe_allow_html=True)
-st.markdown("""
-<style>
-div.stButton > button[aria-label="🔮 حساب القيمة التقديرية"] {
+div.stButton > button {
     font-size: 2.4rem !important;
     font-weight: bold !important;
     background-color: #4CAF50 !important;
@@ -91,6 +87,8 @@ div.stButton > button[aria-label="🔮 حساب القيمة التقديرية"
 }
 </style>
 """, unsafe_allow_html=True)
+
+
 
 @st.cache_resource
 def load_model():
@@ -207,7 +205,8 @@ with col2:
         st.session_state['selected_district'] = district
         
        
-        submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
+        submitted = st.form_submit_button("<span style='font-size:2.4rem;'>🔮 حساب القيمة التقديرية</span>")
+
         
         
     

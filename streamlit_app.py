@@ -59,7 +59,7 @@ div[data-baseweb="select"] > div {
     min-height: 70px !important;
     display: flex;
     align-items: center !important;
-    font-size: 2.4rem !important;
+    font-size: 1.6rem !important;
 }
 
 /* Fix font size for selected item text */

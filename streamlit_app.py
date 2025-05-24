@@ -14,7 +14,7 @@ import plotly.express as px
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
 
 st.markdown("""
-    <h1 style='text-align: center; font-size: 4rem; margin-top: 0;'>لوحة المعلومات العقارية</h1>
+    <h1 style='text-align: center; font-size: 4rem; margin-top: 0;'>🏠 لوحة المعلومات العقارية</h1>
 """, unsafe_allow_html=True)
 
 st.markdown("""

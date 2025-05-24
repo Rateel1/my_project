@@ -66,7 +66,7 @@ div[data-baseweb="select"] > div {
 
 /* Fix font size for selected item text */
 div[data-baseweb="select"] div[role="combobox"] {
-    font-size: 2rem !important;
+    font-size: 1.8rem !important;
 }
 
 /* Font size for dropdown menu options */
@@ -90,7 +90,14 @@ div.stForm button {
 }
 </style>
 """, unsafe_allow_html=True)
-
+st.markdown("""
+<style>
+/* Apply font size to all elements inside the form */
+div[data-testid="stForm"] * {
+    font-size: 1.8rem !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 
 @st.cache_resource

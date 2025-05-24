@@ -32,7 +32,15 @@ section[data-testid="stSidebar"] {
 .stNumberInput input {
     font-size: 1.6rem !important;
 }
-
+div.stForm button {
+    font-size: 3rem !important;
+    font-weight: bold !important;
+    background-color: #4CAF50 !important;
+    color: black !important;
+    border-radius: 8px !important;
+    padding: 0.4em 1.2em !important;
+    cursor: pointer;
+}
 
 
 [data-testid="stForm"] label {
@@ -72,15 +80,7 @@ div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
 
-div.stForm button {
-    font-size: 3rem !important;
-    font-weight: bold !important;
-    background-color: #4CAF50 !important;
-    color: black !important;
-    border-radius: 8px !important;
-    padding: 0.4em 1.2em !important;
-    cursor: pointer;
-}
+
 </style>
 """, unsafe_allow_html=True)
 

@@ -32,9 +32,7 @@ section[data-testid="stSidebar"] {
 
 
 
-.stNumberInput input {
-    font-size: 1.6rem !important;
-}
+
 [data-testid="stForm"] label {
     font-size: 1.8rem !important;
     font-weight: bold !important;

@@ -38,7 +38,7 @@ section[data-testid="stSidebar"] {
 
 
 [data-testid="stForm"] label {
-    font-size: 1.8rem !important;
+    font-size: 2rem !important;
     font-weight: bold !important;
     display: block;
     

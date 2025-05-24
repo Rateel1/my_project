@@ -28,13 +28,9 @@ section[data-testid="stSidebar"] {
     direction: rtl;
     text-align: right;
 }
-div[data-testid="stForm"] input,
 
-div[data-testid="stForm"] button,
-div[data-testid="stForm"] div[role="slider"] {
-    font-size: 2.4rem !important;
-   
-}
+
+
 
 .stNumberInput input {
     font-size: 1.6rem !important;

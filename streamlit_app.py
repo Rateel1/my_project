@@ -226,8 +226,7 @@ with col2:
     
 
 # --- الرؤى والتحليلات ---
-
- submitted = st.form_submit_button("🔮gggg حساب القيمة التقديرية") 
+submitted = st.form_submit_button("🔮gggg حساب القيمة التقديرية") 
     if submitted:
         with st.spinner('جاري الحساب...'):
             input_data = {

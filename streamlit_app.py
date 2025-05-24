@@ -153,15 +153,7 @@ with col2:
 
     with st.form("house_details_form"):
         col_a, col_b = st.columns(2)
-        st.markdown("""
-<style>
-        .custom-submit-button button {
-        font-size: 2rem !important;
-        font-weight: bold !important;
-    }
-</style>
-""", unsafe_allow_html=True
-
+   
         with col_a:
             st.markdown("<label style='font-size:1.8rem;'>عدد غرف النوم 🛏️</label>", unsafe_allow_html=True)
             beds = st.selectbox("", list(range(3, 8)), key="beds")
@@ -200,9 +192,9 @@ with col2:
             st.session_state['location_lng'] = row['location.lng']
         st.session_state['selected_district'] = district
         
-         st.markdown('<div class="custom-submit-button">', unsafe_allow_html=True)
+       
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
-        st.markdown('</div>', unsafe_allow_html=True)
+        
         
     
          

@@ -75,7 +75,10 @@ div[data-baseweb="select"] div[role="combobox"] {
 div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
-
+.custom-button-container button {
+        font-size: 4rem !important;
+        font-weight: bold !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -191,8 +194,10 @@ with col2:
             st.session_state['location_lat'] = row['location.lat']
             st.session_state['location_lng'] = row['location.lng']
         st.session_state['selected_district'] = district
-  
+        
+        st.markdown('<div class="custom-button-container">', unsafe_allow_html=True)
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
+        st.markdown('</div>', unsafe_allow_html=True)
         if submitted:
             with st.spinner('جاري الحساب...'):
                 input_data = {

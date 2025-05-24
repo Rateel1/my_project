@@ -12,20 +12,7 @@ import plotly.express as px
 
 # إعداد الصفحة
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
-st.markdown("""
-<style>
-div.stForm button {
-    font-size: 2.4rem !important;
-    font-weight: bold !important;
-    background-color: #4CAF50 !important;
-    color: white !important;
-    border-radius: 8px !important;
-    padding: 0.4em 1.2em !important;
-    cursor: pointer;
-}
-</style>
-""", unsafe_allow_html=True)
-st.markdown("""
+
 <style>
 
 html, body, [data-testid="stAppViewContainer"] {
@@ -89,7 +76,20 @@ div[data-baseweb="menu"] div[role="option"] {
 
 </style>
 """, unsafe_allow_html=True)
-
+st.markdown("""
+<style>
+div.stForm button {
+    font-size: 2.4rem !important;
+    font-weight: bold !important;
+    background-color: #4CAF50 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 0.4em 1.2em !important;
+    cursor: pointer;
+}
+</style>
+""", unsafe_allow_html=True)
+st.markdown("""
 
 
 @st.cache_resource

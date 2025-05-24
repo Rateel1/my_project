@@ -88,7 +88,7 @@ div.stForm button {
     font-size: 2.4rem !important;
     font-weight: bold !important;
     background-color:#c0c0c0 !important;
-    color: white !important;
+    color: black !important;
     border-radius: 8px !important;
     padding: 0.4em 1.2em !important;
     cursor: pointer;

@@ -75,10 +75,7 @@ div[data-baseweb="select"] div[role="combobox"] {
 div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
- button[data-testid="baseButton-primary"][aria-label="🔮 حساب القيمة التقديرية"] {
-        font-size: 4rem !important;
-        font-weight: bold !important;
-    }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -196,7 +193,7 @@ with col2:
         st.session_state['selected_district'] = district
         
          
-        submitted = st.form_submit_button("🔮 حساب القيمة التقديرية", key="estimate_button")
+        submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
          
         if submitted:
             with st.spinner('جاري الحساب...'):

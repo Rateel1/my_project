@@ -73,7 +73,7 @@ div[data-baseweb="menu"] div[role="option"] {
 }
 
 div.stForm button {
-    font-size: 4rem !important;
+    font-size: 3rem !important;
     font-weight: bold !important;
     background-color: #4CAF50 !important;
     color: black !important;

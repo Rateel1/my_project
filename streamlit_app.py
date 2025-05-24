@@ -227,25 +227,20 @@ with col2:
 
 # --- الرؤى والتحليلات ---
 
- submitted = st.form_submit_button("🔮gggg حساب القيمة التقديرية")
-
-        
-        
-    
-         
-        if submitted:
-            with st.spinner('جاري الحساب...'):
-                input_data = {
-                    'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
-                    'street_width': street_width, 'age': age, 'street_direction': street_direction,
-                    'ketchen': ketchen, 'furnished': furnished,
-                    'location.lat': st.session_state['location_lat'],
-                    'location.lng': st.session_state['location_lng'],
-                    'district': district
-                }
-                price = predict_price(input_data)
-                st.success("تمت عملية التوقع بنجاح!")
-                st.metric("السعر التقريبي", f"ريال {price:,.2f}")
+ submitted = st.form_submit_button("🔮gggg حساب القيمة التقديرية") 
+    if submitted:
+        with st.spinner('جاري الحساب...'):
+            input_data = {
+                'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
+                'street_width': street_width, 'age': age, 'street_direction': street_direction,
+                 'ketchen': ketchen, 'furnished': furnished,
+                'location.lat': st.session_state['location_lat'],
+                'location.lng': st.session_state['location_lng'],
+                 'district': district
+             }
+            price = predict_price(input_data)
+            st.success("تمت عملية التوقع بنجاح!")
+             st.metric("السعر التقريبي", f"ريال {price:,.2f}")
  
 st.markdown("<h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>", unsafe_allow_html=True)
 

@@ -12,6 +12,7 @@ import plotly.express as px
 
 # إعداد الصفحة
 st.set_page_config(page_title="لوحة المعلومات العقارية", layout="wide", initial_sidebar_state="collapsed")
+st.markdown("""
 
 <style>
 

@@ -15,15 +15,7 @@ st.set_page_config(page_title="لوحة المعلومات العقارية", la
 
 st.markdown("""
 <style>
-div.stForm button {
-    font-size: 3rem !important;
-    font-weight: bold !important;
-    background-color: #4CAF50 !important;
-    color: black !important;
-    border-radius: 8px !important;
-    padding: 0.4em 1.2em !important;
-    cursor: pointer;
-}
+
 html, body, [data-testid="stAppViewContainer"] {
     direction: rtl;
     text-align: right;
@@ -53,7 +45,7 @@ section[data-testid="stSidebar"] {
     text-align: right;
 }
 div[data-testid="stSelectbox"] label,
-div[data-testid="stNumberInput"] label {
+div[data-testid="stNumberInput"] label,div.stForm button {
     font-size: 2rem !important;
     font-weight: bold !important;
     text-align: right;

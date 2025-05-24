@@ -73,10 +73,10 @@ div[data-baseweb="menu"] div[role="option"] {
 }
 
 div.stForm button {
-    font-size: 2.4rem !important;
+    font-size: 4rem !important;
     font-weight: bold !important;
     background-color: #4CAF50 !important;
-    color: white !important;
+    color: black !important;
     border-radius: 8px !important;
     padding: 0.4em 1.2em !important;
     cursor: pointer;

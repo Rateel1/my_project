@@ -75,10 +75,7 @@ div[data-baseweb="select"] div[role="combobox"] {
 div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
-.custom-submit-button button {
-        font-size: 2rem !important;
-        font-weight: bold !important;
-    }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -156,6 +153,14 @@ with col2:
 
     with st.form("house_details_form"):
         col_a, col_b = st.columns(2)
+        st.markdown("""
+<style>
+        .custom-submit-button button {
+        font-size: 2rem !important;
+        font-weight: bold !important;
+    }
+</style>
+""", unsafe_allow_html=True
 
         with col_a:
             st.markdown("<label style='font-size:1.8rem;'>عدد غرف النوم 🛏️</label>", unsafe_allow_html=True)

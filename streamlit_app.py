@@ -66,7 +66,7 @@ div[data-baseweb="select"] > div {
 
 /* Fix font size for selected item text */
 div[data-baseweb="select"] div[role="combobox"] {
-    font-size: 1.8rem !important;
+    font-size: 2rem !important;
 }
 
 /* Font size for dropdown menu options */

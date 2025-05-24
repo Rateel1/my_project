@@ -76,7 +76,7 @@ div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
  button[data-testid="baseButton-primary"][aria-label="🔮 حساب القيمة التقديرية"] {
-        font-size: 2rem !important;
+        font-size: 4rem !important;
         font-weight: bold !important;
     }
 </style>

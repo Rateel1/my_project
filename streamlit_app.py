@@ -82,7 +82,7 @@ st.markdown("""
 div.stForm button {
     font-size: 2.4rem !important;
     font-weight: bold !important;
-    background-color: #d3d3d3 !important;
+    background-color:#c0c0c0 !important;
     color: white !important;
     border-radius: 8px !important;
     padding: 0.4em 1.2em !important;

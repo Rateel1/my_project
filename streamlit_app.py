@@ -78,6 +78,19 @@ div[data-baseweb="menu"] div[role="option"] {
 
 </style>
 """, unsafe_allow_html=True)
+st.markdown("""
+<style>
+div.stButton > button[aria-label="🔮 حساب القيمة التقديرية"] {
+    font-size: 2.4rem !important;
+    font-weight: bold !important;
+    background-color: #4CAF50 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 0.4em 1.2em !important;
+    cursor: pointer;
+}
+</style>
+""", unsafe_allow_html=True)
 
 @st.cache_resource
 def load_model():
@@ -149,20 +162,7 @@ with col1:
     st.success(f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
 
 with col2:
-    st.markdown("""
-<style>
-div.stButton > button[aria-label="🔮 حساب القيمة التقديرية"] {
-    font-size: 2.4rem !important;
-    font-weight: bold !important;
-    background-color: #4CAF50 !important;
-    color: white !important;
-    border-radius: 8px !important;
-    padding: 0.4em 1.2em !important;
-    cursor: pointer;
-}
-</style>
-""", unsafe_allow_html=True)
-
+   
     st.markdown("<h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>", unsafe_allow_html=True)
 
     with st.form("house_details_form"):

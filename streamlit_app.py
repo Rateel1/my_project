@@ -195,9 +195,9 @@ with col2:
             st.session_state['location_lng'] = row['location.lng']
         st.session_state['selected_district'] = district
         
-        st.markdown('<div class="custom-button-container">', unsafe_allow_html=True)
+         st.markdown('<div class="custom-button-container">', unsafe_allow_html=True)
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
-        st.markdown('</div>', unsafe_allow_html=True)
+         st.markdown('</div>', unsafe_allow_html=True)
         if submitted:
             with st.spinner('جاري الحساب...'):
                 input_data = {

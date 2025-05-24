@@ -72,7 +72,7 @@ div[data-baseweb="menu"] div[role="option"] {
     font-size: 1.8rem !important;
 }
 
-div.stButton > button {
+div.stForm button {
     font-size: 2.4rem !important;
     font-weight: bold !important;
     background-color: #4CAF50 !important;
@@ -81,8 +81,6 @@ div.stButton > button {
     padding: 0.4em 1.2em !important;
     cursor: pointer;
 }
-
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -205,10 +203,7 @@ with col2:
        
         submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
 
-        
-        
-    
-         
+           
         if submitted:
             with st.spinner('جاري الحساب...'):
                 input_data = {
@@ -226,20 +221,7 @@ with col2:
     
 
 # --- الرؤى والتحليلات ---
-submitted = st.form_submit_button("🔮gggg حساب القيمة التقديرية") 
-if submitted:
-     with st.spinner('جاري الحساب...'):
-       input_data = {
-                'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
-                'street_width': street_width, 'age': age, 'street_direction': street_direction,
-                 'ketchen': ketchen, 'furnished': furnished,
-                'location.lat': st.session_state['location_lat'],
-                'location.lng': st.session_state['location_lng'],
-                 'district': district
-             }
-     price = predict_price(input_data)
-     st.success("تمت عملية التوقع بنجاح!")
-     st.metric("السعر التقريبي", f"ريال {price:,.2f}")
+
  
 st.markdown("<h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>", unsafe_allow_html=True)
 

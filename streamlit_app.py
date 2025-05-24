@@ -19,6 +19,15 @@ html, body, [data-testid="stAppViewContainer"] {
     direction: rtl;
     text-align: right;
 }
+div.stForm button {
+    font-size: 3rem !important;
+    font-weight: bold !important;
+    background-color: #4CAF50 !important;
+    color: black !important;
+    border-radius: 8px !important;
+    padding: 0.4em 1.2em !important;
+    cursor: pointer;
+}
 h2, h3, h4, h5, h6 {
     text-align: right;
     font-size: 2rem !important;
@@ -32,15 +41,7 @@ section[data-testid="stSidebar"] {
 .stNumberInput input {
     font-size: 1.6rem !important;
 }
-div.stForm button {
-    font-size: 3rem !important;
-    font-weight: bold !important;
-    background-color: #4CAF50 !important;
-    color: black !important;
-    border-radius: 8px !important;
-    padding: 0.4em 1.2em !important;
-    cursor: pointer;
-}
+
 
 
 [data-testid="stForm"] label {

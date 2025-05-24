@@ -20,7 +20,7 @@ html, body, [data-testid="stAppViewContainer"] {
     text-align: right;
 }
 
-h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6{
     text-align: right;
     font-size:2rem !important;
 }

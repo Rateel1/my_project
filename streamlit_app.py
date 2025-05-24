@@ -15,10 +15,6 @@ st.set_page_config(page_title="لوحة المعلومات العقارية", la
 
 st.markdown("""
 <style>
-html, body, [data-testid="stAppViewContainer"] {
-    direction: rtl;
-    text-align: right;
-}
 div.stForm button {
     font-size: 3rem !important;
     font-weight: bold !important;
@@ -28,6 +24,11 @@ div.stForm button {
     padding: 0.4em 1.2em !important;
     cursor: pointer;
 }
+html, body, [data-testid="stAppViewContainer"] {
+    direction: rtl;
+    text-align: right;
+}
+
 h2, h3, h4, h5, h6 {
     text-align: right;
     font-size: 2rem !important;

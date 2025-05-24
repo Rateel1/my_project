@@ -90,7 +90,7 @@ div.stForm button {
 }
 </style>
 """, unsafe_allow_html=True)
-st.markdown("""
+
 
 
 @st.cache_resource
@@ -227,9 +227,7 @@ with col2:
 
     
 
-# --- الرؤى والتحليلات ---
 
- 
 st.markdown("<h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>", unsafe_allow_html=True)
 
 # --- 📊 Feature Importance Section ---

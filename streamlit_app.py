@@ -82,7 +82,7 @@ st.markdown("""
 div.stForm button {
     font-size: 2.4rem !important;
     font-weight: bold !important;
-    background-color: #4CAF50 !important;
+    background-color: #d3d3d3 !important;
     color: white !important;
     border-radius: 8px !important;
     padding: 0.4em 1.2em !important;
@@ -197,7 +197,7 @@ with col2:
             street_width = st.selectbox("", [10, 12, 15, 18, 20, 25], key="street_width")
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>عمر العقار 🗓️</label>", unsafe_allow_html=True)
             age = st.selectbox("", list(range(0, 6)), key="age")
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>نوع الواجهة 🧭 🛣️</label>", unsafe_allow_html=True)
+            st.markdown("<label style='font-size:1rem; font-weight:bold;'>نوع الواجهة 🧭 </label>", unsafe_allow_html=True)
             street_direction = st.selectbox("", [
                 "واجهة شمالية", "واجهة شرقية", "واجهة غربية", "واجهة جنوبية",
                 "واجهة شمالية شرقية", "واجهة جنوبية شرقية", "واجهة جنوبية غربية", "واجهة شمالية غربية",

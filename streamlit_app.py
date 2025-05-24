@@ -220,7 +220,7 @@ with col2:
         st.session_state['selected_district'] = district
         
        
-        submitted = st.form_submit_button("🔮 حساب القيمة التقديرية")
+        submitted = st.form_submit_button(" حساب القيمة التقديرية 🔮")
 
            
         if submitted:

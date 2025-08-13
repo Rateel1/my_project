@@ -221,9 +221,9 @@ with col2:
         if submitted:
             with st.spinner('جاري الحساب...'):
                 input_data = {
-                    'beds': beds, 'livings': livings, 'wc': wc, 'area': area,
+                     'livings': livings, 'area': area,
                     'street_width': street_width, 'age': age, 'street_direction': street_direction,
-                    'ketchen': ketchen, 'furnished': furnished,
+                   
                     'location.lat': st.session_state['location_lat'],
                     'location.lng': st.session_state['location_lng'],
                     'district': district

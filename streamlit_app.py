@@ -182,12 +182,10 @@ with col2:
         col_a, col_b = st.columns(2)
    
         with col_a:
-            st.markdown("<label style='font-size:1.8rem;'>عدد غرف النوم 🛏️</label>", unsafe_allow_html=True)
-            beds = st.selectbox("", list(range(3, 8)), key="beds")
+           
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>عدد غرف المعيشة 🛋️</label>", unsafe_allow_html=True)
             livings = st.selectbox("", list(range(1, 8)), key="livings")
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>عدد دورات المياه 🚽</label>", unsafe_allow_html=True)
-            wc = st.selectbox("", list(range(2, 6)), key="wc")
+           
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>المساحة (متر مربع) 📏</label>", unsafe_allow_html=True)
             area = st.number_input("", 150.0, 600.0, 150.0, key="area")
             st.markdown("<label style='font-size:1.8rem;'>اختر الحي 🏙️</label>", unsafe_allow_html=True)
@@ -205,13 +203,10 @@ with col2:
             st.markdown("<label style='font-size:1rem; font-weight:bold;'>نوع الواجهة 🧭 </label>", unsafe_allow_html=True)
             street_direction = st.selectbox("", [
                 "واجهة شمالية", "واجهة شرقية", "واجهة غربية", "واجهة جنوبية",
-                "واجهة شمالية شرقية", "واجهة جنوبية شرقية", "واجهة جنوبية غربية", "واجهة شمالية غربية",
-                "الفلة تقع على ثلاثة شوارع", "الفلة تقع على أربعة شوارع"
+                "واجهة شمالية شرقية", "واجهة جنوبية شرقية", "واجهة جنوبية غربية", "واجهة شمالية غربية"
+              
             ], key="street_direction")
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>المطبخ مجهز🍳؟ </label>", unsafe_allow_html=True)
-            ketchen = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا", key="ketchen")
-            st.markdown("<label style='font-size:1rem; font-weight:bold;'>الفلة مؤثثة 🪑؟</label>", unsafe_allow_html=True)
-            furnished = st.selectbox("", [1, 0], format_func=lambda x: "نعم" if x == 1 else "لا", key="furnished")
+           
 
         if not st.session_state['location_manually_set']:
             row = district_centers[district_centers['district'] == district].iloc[0]

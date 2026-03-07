@@ -127,12 +127,12 @@ div[data-testid="stForm"] * {
 # =======================
 @st.cache_resource
 def load_model():
-    return joblib.load("XGBM_DB_last.joblib")
+    return joblib.load("selected_xgb_modelafter.joblib")
 
 
 @st.cache_resource
 def load_model_columns():
-    return joblib.load("xgb_model_columns_DB.pkl")
+    return joblib.load("xgb_model_featuresafter.pkl")
 
 
 model = load_model()

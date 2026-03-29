@@ -195,9 +195,9 @@ col1, col2 = st.columns([1, 2])
 
 with col1:
     st.markdown(
-        "<h1 style='font-size:2.4rem;'>📍 اختر الموقع</h1>", unsafe_allow_html=True
+        "<h1 style='font-size:2.4rem; text-align: right; direction: rtl;'>📍 اختر الموقع</h1>", unsafe_allow_html=True
     )
-
+  
     district = st.selectbox(
         "🏙️ اختر الحي",
         district_centers["district"].unique().tolist(),
@@ -279,7 +279,7 @@ with col1:
 
 with col2:
     st.markdown(
-        "<h1 style='font-size:2.4rem;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>",
+        "<h1 style='font-size:2.4rem;text-align: right; direction: rtl; margin-bottom:20px;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>",
         unsafe_allow_html=True,
     )
 

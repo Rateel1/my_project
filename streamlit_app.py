@@ -1,4 +1,3 @@
-
 import streamlit as st
 import joblib
 import pandas as pd
@@ -27,9 +26,7 @@ st.markdown(
 
 st.markdown(
     """
-
 <style>
-
 html, body, [data-testid="stAppViewContainer"] {
     direction: rtl;
     text-align: right;
@@ -49,28 +46,24 @@ section[data-testid="stSidebar"] {
     font-size: 1.6rem !important;
 }
 
-
-
 [data-testid="stForm"] label {
     font-size: 2rem !important;
     font-weight: bold !important;
     display: block;
-    
     text-align: right;
 }
+
 div[data-testid="stSelectbox"] label,
 div[data-testid="stNumberInput"] label {
     font-size: 2rem !important;
     font-weight: bold !important;
     text-align: right;
-      
 }
-/* Selectbox height */
+
 div[data-baseweb="select"] {
     min-height: 70px !important;
 }
 
-/* Selected value area (visible text when closed) */
 div[data-baseweb="select"] > div {
     min-height: 70px !important;
     display: flex;
@@ -78,21 +71,18 @@ div[data-baseweb="select"] > div {
     font-size: 1.8rem !important;
 }
 
-/* Fix font size for selected item text */
 div[data-baseweb="select"] div[role="combobox"] {
     font-size: 1.8rem !important;
 }
 
-/* Font size for dropdown menu options */
 div[data-baseweb="menu"] div[role="option"] {
     font-size: 2rem !important;
 }
-
-
 </style>
 """,
     unsafe_allow_html=True,
 )
+
 st.markdown(
     """
 <style>
@@ -109,10 +99,10 @@ div.stForm button {
 """,
     unsafe_allow_html=True,
 )
+
 st.markdown(
     """
 <style>
-/* Apply font size to all elements inside the form */
 div[data-testid="stForm"] * {
     font-size: 1.8rem !important;
 }
@@ -140,18 +130,16 @@ model_columns = load_model_columns()
 
 
 # =======================
-# FIXED PREDICT FUNCTION
+# PREDICT FUNCTION
 # =======================
 def predict_price(new_record):
     df = pd.DataFrame([new_record])
     df = pd.get_dummies(df)
 
-    # ✅ Preserve numeric coordinates
     for coord in ["location.lat", "location.lng"]:
         if coord not in df.columns:
             df[coord] = float(new_record.get(coord, 0))
 
-    # ✅ Ensure all model columns are present
     for col in model_columns:
         if col not in df.columns:
             df[col] = 0
@@ -176,6 +164,16 @@ def haversine_distance(lat1, lng1, lat2, lng2):
     return R * c
 
 
+def get_nearest_district(lat, lng):
+    distances = district_centers.apply(
+        lambda row: haversine_distance(
+            lat, lng, row["location.lat"], row["location.lng"]
+        ),
+        axis=1,
+    )
+    return district_centers.loc[distances.idxmin(), "district"]
+
+
 # =======================
 # LOAD DISTRICT DATA
 # =======================
@@ -183,14 +181,18 @@ district_centers = pd.read_excel("district_centers.xlsx").dropna(subset=["distri
 
 # Default Riyadh center
 riyadh_lat, riyadh_lng = 24.7136, 46.6753
+
+# --- Confirmed coordinates (used for prediction) ---
 st.session_state.setdefault("location_lat", float(riyadh_lat))
 st.session_state.setdefault("location_lng", float(riyadh_lng))
 st.session_state.setdefault("location_manually_set", False)
+st.session_state.setdefault("selected_district", district_centers.iloc[0]["district"])
+
+# --- Pending coordinates (updated on every click/drag, not yet confirmed) ---
 st.session_state.setdefault("pending_lat", float(riyadh_lat))
 st.session_state.setdefault("pending_lng", float(riyadh_lng))
 st.session_state.setdefault("pending_district", district_centers.iloc[0]["district"])
-  
-st.session_state.setdefault("selected_district", district_centers.iloc[0]["district"])
+
 
 # =======================
 # STREAMLIT UI
@@ -199,9 +201,10 @@ col1, col2 = st.columns([1, 2])
 
 with col1:
     st.markdown(
-        "<h1 style='font-size:2.4rem; text-align: right; direction: rtl;'>📍 اختر الموقع</h1>", unsafe_allow_html=True
+        "<h1 style='font-size:2.4rem; text-align: right; direction: rtl;'>📍 اختر الموقع</h1>",
+        unsafe_allow_html=True,
     )
-  
+
     district = st.selectbox(
         "🏙️ اختر الحي",
         district_centers["district"].unique().tolist(),
@@ -213,9 +216,15 @@ with col1:
     # Update coordinates when selecting a district from the selectbox
     if district != st.session_state["selected_district"]:
         row = district_centers[district_centers["district"] == district].iloc[0]
-        st.session_state["location_lat"] = float(row["location.lat"])
-        st.session_state["location_lng"] = float(row["location.lng"])
+        new_lat = float(row["location.lat"])
+        new_lng = float(row["location.lng"])
+        # Commit immediately when chosen from dropdown
+        st.session_state["location_lat"] = new_lat
+        st.session_state["location_lng"] = new_lng
+        st.session_state["pending_lat"] = new_lat
+        st.session_state["pending_lng"] = new_lng
         st.session_state["selected_district"] = district
+        st.session_state["pending_district"] = district
         st.session_state["location_manually_set"] = False
 
     if st.button("🔁 إعادة تعيين الموقع"):
@@ -223,11 +232,15 @@ with col1:
         selected_row = district_centers[
             district_centers["district"] == st.session_state["selected_district"]
         ].iloc[0]
-        st.session_state["location_lat"] = selected_row["location.lat"]
-        st.session_state["location_lng"] = selected_row["location.lng"]
+        reset_lat = float(selected_row["location.lat"])
+        reset_lng = float(selected_row["location.lng"])
+        st.session_state["location_lat"] = reset_lat
+        st.session_state["location_lng"] = reset_lng
+        st.session_state["pending_lat"] = reset_lat
+        st.session_state["pending_lng"] = reset_lng
 
     riyadh_bounds = [[24.00, 46.55], [24.85, 47.20]]
-    
+
     m = folium.Map(
         location=[st.session_state["location_lat"], st.session_state["location_lng"]],
         zoom_start=12,
@@ -235,7 +248,6 @@ with col1:
         control_scale=True,
     )
     m.fit_bounds(riyadh_bounds)
-    #m.options["maxBounds"] = riyadh_bounds
     m.options["minZoom"] = 6.20
     m.options["maxZoom"] = 16
     m.options["scrollWheelZoom"] = True
@@ -250,48 +262,72 @@ with col1:
     )
     marker.add_to(m)
 
-    map_data = st_folium(m, width=700, height=450)
+    map_data = st_folium(
+        m,
+        width=700,
+        height=450,
+        returned_objects=["last_clicked", "last_active_drawing"],
+    )
 
-    # Update when you click on the map
-   Phase 1: capture click/drag into PENDING state (no rerun side effects)
-+ if map_data:
-+     # Priority: dragged marker position
-+     dragged = map_data.get("last_active_drawing") or {}
-+     coords = dragged.get("geometry", {}).get("coordinates")
-+     if coords:  # GeoJSON: [lng, lat]
-+         new_lat, new_lng = float(coords[1]), float(coords[0])
-+     elif map_data.get("last_clicked"):
-+         lc = map_data["last_clicked"]
-+         new_lat = float(lc.get("lat", st.session_state["pending_lat"]))
-+         new_lng = float(lc.get("lng", st.session_state["pending_lng"]))
-+     else:
-+         new_lat, new_lng = None, None
-+ 
-+     if new_lat is not None:
-+         st.session_state["pending_lat"] = new_lat
-+         st.session_state["pending_lng"] = new_lng
-+         distances = district_centers.apply(
-+             lambda row: haversine_distance(
-+                 new_lat, new_lng,
-+                 row["location.lat"], row["location.lng"]), axis=1)
-+         st.session_state["pending_district"] = district_centers.loc[
-+             distances.idxmin(), "district"]
-+ 
-+ # Phase 2: confirm button commits pending → active
-+ if st.button("✅ تأكيد الموقع المحدد"):
-+     st.session_state["location_lat"] = st.session_state["pending_lat"]
-+     st.session_state["location_lng"] = st.session_state["pending_lng"]
-+     st.session_state["selected_district"] = st.session_state["pending_district"]
-+     st.session_state["location_manually_set"] = True
-+     st.success(f"✅ تم تأكيد الموقع: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
-+ else:
-+     st.info(f"📍 موقع معلّق: {st.session_state['pending_lat']:.4f}, {st.session_state['pending_lng'
+    # =======================
+    # PHASE 1: Capture click or drag → update PENDING state only
+    # =======================
+    if map_data:
+        new_lat, new_lng = None, None
 
-    
+        # Priority: dragged marker (GeoJSON coordinates are [lng, lat])
+        dragged = map_data.get("last_active_drawing") or {}
+        coords = dragged.get("geometry", {}).get("coordinates")
+        if coords:
+            new_lat = float(coords[1])
+            new_lng = float(coords[0])
 
+        # Fallback: map click
+        elif map_data.get("last_clicked"):
+            lc = map_data["last_clicked"]
+            new_lat = float(lc.get("lat", st.session_state["pending_lat"]))
+            new_lng = float(lc.get("lng", st.session_state["pending_lng"]))
+
+        if new_lat is not None:
+            st.session_state["pending_lat"] = new_lat
+            st.session_state["pending_lng"] = new_lng
+            st.session_state["pending_district"] = get_nearest_district(new_lat, new_lng)
+
+    # =======================
+    # PHASE 2: Confirm button commits PENDING → CONFIRMED
+    # =======================
+    pending_changed = (
+        st.session_state["pending_lat"] != st.session_state["location_lat"]
+        or st.session_state["pending_lng"] != st.session_state["location_lng"]
+    )
+
+    if pending_changed:
+        st.info(
+            f"📍 موقع معلّق (غير مؤكد): "
+            f"{st.session_state['pending_lat']:.4f}, {st.session_state['pending_lng']:.4f}"
+        )
+
+    if st.button("✅ تأكيد الموقع المحدد", disabled=not pending_changed):
+        st.session_state["location_lat"] = st.session_state["pending_lat"]
+        st.session_state["location_lng"] = st.session_state["pending_lng"]
+        st.session_state["selected_district"] = st.session_state["pending_district"]
+        st.session_state["location_manually_set"] = True
+        st.rerun()
+
+    st.success(
+        f"✅ الموقع المؤكد: "
+        f"{st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}"
+        f" — {st.session_state['selected_district']}"
+    )
+
+
+# =======================
+# RIGHT COLUMN: House Details Form
+# =======================
 with col2:
     st.markdown(
-        "<h1 style='font-size:2.4rem;text-align: right; direction: rtl; margin-bottom:20px;'>🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>",
+        "<h1 style='font-size:2.4rem;text-align: right; direction: rtl; margin-bottom:20px;'>"
+        "🏠 أدخل تفاصيل المنزل لتقدير قيمته السوقية</h1>",
         unsafe_allow_html=True,
     )
 
@@ -316,9 +352,7 @@ with col2:
                 "<label style='font-size:1rem; font-weight:bold;'>عرض الشارع (متر) 🛣️</label>",
                 unsafe_allow_html=True,
             )
-            street_width = st.selectbox(
-                "", [10, 12, 15, 18, 20, 25], key="street_width"
-            )
+            street_width = st.selectbox("", [10, 12, 15, 18, 20, 25], key="street_width")
 
             st.markdown(
                 "<label style='font-size:1rem; font-weight:bold;'>عمر العقار 🗓️</label>",
@@ -345,7 +379,7 @@ with col2:
                 key="street_direction",
             )
 
-        submitted = st.form_submit_button(" حساب القيمة التقديرية 🔮")
+        submitted = st.form_submit_button("حساب القيمة التقديرية 🔮")
         if submitted:
             with st.spinner("جاري الحساب..."):
                 input_data = {
@@ -359,19 +393,22 @@ with col2:
                     "district": st.session_state["selected_district"],
                 }
 
-                price = predict_price(input_data)  # دالة التوقع عندك
+                price = predict_price(input_data)
                 st.success("✅ تمت عملية التوقع بنجاح!")
                 st.metric("السعر التقريبي", f"ريال {price:,.2f}")
+
+
 # =======================
 # DEBUG SIDEBAR
 # =======================
 with st.sidebar:
     st.header("🧭 Debug Panel")
-    st.write("Latitude:", st.session_state["location_lat"])
-    st.write("Longitude:", st.session_state["location_lng"])
+    st.write("Confirmed Latitude:", st.session_state["location_lat"])
+    st.write("Confirmed Longitude:", st.session_state["location_lng"])
+    st.write("Pending Latitude:", st.session_state["pending_lat"])
+    st.write("Pending Longitude:", st.session_state["pending_lng"])
     st.write("Selected District:", st.session_state["selected_district"])
-
-
+    st.write("Pending District:", st.session_state["pending_district"])
 st.markdown(
     "<h1 style='font-size:2.4rem;text-align: right; direction: rtl;'>📊 الرؤى واتجاهات السوق العقاري</h1>",
     unsafe_allow_html=True,

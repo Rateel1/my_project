@@ -361,7 +361,7 @@ with st.sidebar:
 
 
 st.markdown(
-    "<h1 style='font-size:2.4rem;'>📊 الرؤى واتجاهات السوق العقاري</h1>",
+    "<h1 style='font-size:2.4rem;text-align: right; direction: rtl;'>📊 الرؤى واتجاهات السوق العقاري</h1>",
     unsafe_allow_html=True,
 )
 

@@ -186,6 +186,10 @@ riyadh_lat, riyadh_lng = 24.7136, 46.6753
 st.session_state.setdefault("location_lat", float(riyadh_lat))
 st.session_state.setdefault("location_lng", float(riyadh_lng))
 st.session_state.setdefault("location_manually_set", False)
+st.session_state.setdefault("pending_lat", float(riyadh_lat))
+st.session_state.setdefault("pending_lng", float(riyadh_lng))
+st.session_state.setdefault("pending_district", district_centers.iloc[0]["district"])
+  
 st.session_state.setdefault("selected_district", district_centers.iloc[0]["district"])
 
 # =======================
@@ -249,33 +253,41 @@ with col1:
     map_data = st_folium(m, width=700, height=450)
 
     # Update when you click on the map
-    if map_data and map_data.get("last_clicked"):
-        last_click = map_data["last_clicked"]
-        st.session_state["location_lat"] = float(
-            last_click.get("lat", st.session_state["location_lat"])
-        )
-        st.session_state["location_lng"] = float(
-            last_click.get("lng", st.session_state["location_lng"])
-        )
-        st.session_state["location_manually_set"] = True
+   Phase 1: capture click/drag into PENDING state (no rerun side effects)
++ if map_data:
++     # Priority: dragged marker position
++     dragged = map_data.get("last_active_drawing") or {}
++     coords = dragged.get("geometry", {}).get("coordinates")
++     if coords:  # GeoJSON: [lng, lat]
++         new_lat, new_lng = float(coords[1]), float(coords[0])
++     elif map_data.get("last_clicked"):
++         lc = map_data["last_clicked"]
++         new_lat = float(lc.get("lat", st.session_state["pending_lat"]))
++         new_lng = float(lc.get("lng", st.session_state["pending_lng"]))
++     else:
++         new_lat, new_lng = None, None
++ 
++     if new_lat is not None:
++         st.session_state["pending_lat"] = new_lat
++         st.session_state["pending_lng"] = new_lng
++         distances = district_centers.apply(
++             lambda row: haversine_distance(
++                 new_lat, new_lng,
++                 row["location.lat"], row["location.lng"]), axis=1)
++         st.session_state["pending_district"] = district_centers.loc[
++             distances.idxmin(), "district"]
++ 
++ # Phase 2: confirm button commits pending → active
++ if st.button("✅ تأكيد الموقع المحدد"):
++     st.session_state["location_lat"] = st.session_state["pending_lat"]
++     st.session_state["location_lng"] = st.session_state["pending_lng"]
++     st.session_state["selected_district"] = st.session_state["pending_district"]
++     st.session_state["location_manually_set"] = True
++     st.success(f"✅ تم تأكيد الموقع: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}")
++ else:
++     st.info(f"📍 موقع معلّق: {st.session_state['pending_lat']:.4f}, {st.session_state['pending_lng'
 
-        # Update district based on proximity
-        distances = district_centers.apply(
-            lambda row: haversine_distance(
-                st.session_state["location_lat"],
-                st.session_state["location_lng"],
-                row["location.lat"],
-                row["location.lng"],
-            ),
-            axis=1,
-        )
-        st.session_state["selected_district"] = district_centers.loc[
-            distances.idxmin(), "district"
-        ]
-
-    st.success(
-        f"📌 الموقع المحدد: {st.session_state['location_lat']:.4f}, {st.session_state['location_lng']:.4f}"
-    )
+    
 
 with col2:
     st.markdown(

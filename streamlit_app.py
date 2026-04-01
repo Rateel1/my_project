@@ -214,37 +214,7 @@ with col1:
             .index(st.session_state["selected_district"]),
         key="district_select"
     )    
-    st.markdown(
-    "<h1 style='font-size:2.4rem; text-align: right; direction: rtl;'>📍 اختر الموقع</h1>",
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    "<label style='font-size:1rem; font-weight:bold; display:block; text-align:right; direction:rtl;'>🏙️ اختر الحي</label>",
-    unsafe_allow_html=True
-)
-
-district = st.selectbox(
-    "",
-    district_centers["district"].unique().tolist(),
-    index=district_centers["district"]
-        .tolist()
-        .index(st.session_state["selected_district"]),
-    key="district_select"
-)
-        "<h1 style='font-size:2.4rem; text-align: right; direction: rtl;'>📍 اختر الموقع</h1>", unsafe_allow_html=True
-    )
-    st.markdown(
-    "<label style='font-size:1rem; font-weight:bold;'>🏙️ اختر الحي</label>",
-    unsafe_allow_html=True
- )district = st.selectbox(
-    "",
   
-        district_centers["district"].unique().tolist(),
-        index=district_centers["district"]
-        .tolist()
-        .index(st.session_state["selected_district"]),
-    )
     
     # Update coordinates when selecting a district from the selectbox
     if district != st.session_state["selected_district"]:

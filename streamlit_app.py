@@ -202,7 +202,7 @@ with col1:
     )
 
     st.markdown(
-        "<label style='font-size:1rem; font-weight:bold; display:block; text-align:right; direction:rtl;'>🏙️ اختر الحي</label>",
+        "<label style='font-size:2rem; font-weight:bold; display:block; text-align:right; direction:rtl;'>🏙️ اختر الحي</label>",
         unsafe_allow_html=True
     )
 

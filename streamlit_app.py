@@ -200,7 +200,7 @@ with col1:
     st.markdown(
     "<label style='font-size:1rem; font-weight:bold;'>🏙️ اختر الحي</label>",
     unsafe_allow_html=True
-)district = st.selectbox(
+ )district = st.selectbox(
     "",
   
         district_centers["district"].unique().tolist(),

@@ -193,8 +193,27 @@ st.session_state.setdefault("selected_district", district_centers.iloc[0]["distr
 # =======================
 col1, col2 = st.columns([1, 2])
 
+
 with col1:
-    
+
+    st.markdown(
+        "<h1 style='font-size:2.4rem; text-align: right; direction: rtl;'>📍 اختر الموقع</h1>",
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        "<label style='font-size:1rem; font-weight:bold; display:block; text-align:right; direction:rtl;'>🏙️ اختر الحي</label>",
+        unsafe_allow_html=True
+    )
+
+    district = st.selectbox(
+        "",
+        district_centers["district"].unique().tolist(),
+        index=district_centers["district"]
+            .tolist()
+            .index(st.session_state["selected_district"]),
+        key="district_select"
+    )    
     st.markdown(
     "<h1 style='font-size:2.4rem; text-align: right; direction: rtl;'>📍 اختر الموقع</h1>",
     unsafe_allow_html=True

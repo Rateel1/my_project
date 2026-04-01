@@ -197,15 +197,20 @@ with col1:
     st.markdown(
         "<h1 style='font-size:2.4rem; text-align: right; direction: rtl;'>📍 اختر الموقع</h1>", unsafe_allow_html=True
     )
+    st.markdown(
+    "<label style='font-size:1rem; font-weight:bold;'>🏙️ اختر الحي</label>",
+    unsafe_allow_html=True
+)
+
+district = st.selectbox(
+    "",
   
-    district = st.selectbox(
-        "🏙️ اختر الحي",
         district_centers["district"].unique().tolist(),
         index=district_centers["district"]
         .tolist()
         .index(st.session_state["selected_district"]),
     )
-
+    
     # Update coordinates when selecting a district from the selectbox
     if district != st.session_state["selected_district"]:
         row = district_centers[district_centers["district"] == district].iloc[0]
